@@ -13,15 +13,13 @@ basadoHecho = Table('basadoshechos',
                     Column("pariente", Integer, ForeignKey("parientebasados.id"))
 )
 
-
-
 class User(Base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True)
     username = Column(String(20), unique=True, nullable=False)
     basados = Column(Integer, default=0)
-    basadosHechos = relationship("parientebasados", secondary=basadoHecho, backref=backref("basadoPorUsuarios", lazy ="dynamic"))
+    basadosHechos = relationship("ParienteBasado", secondary=basadoHecho, backref=backref("basadoPorUsuarios", lazy ="dynamic"))
     parientesCreados = relationship("ParienteBasado", backref="autor")
     pildoras = relationship("Pildora", backref="recibidor")
 
@@ -37,7 +35,7 @@ class ParienteBasado(Base):
     autorId = Column(Integer, ForeignKey("users.id"))
 
     def __repr__(self) -> str:
-        return f"ParienteBasado(parentId={self.parentId}, submissionId={self.submissionId} isComment={self.isComment})"
+        return f"ParienteBasado(parentId={self.parentId}, submissionId={self.submissionId}, isComment={self.isComment})"
 
 class Pildora(Base):
     __tablename__ = "pildoras"
