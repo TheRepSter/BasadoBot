@@ -1,7 +1,24 @@
 from praw.reddit import Submission
-from basadobot.models import User, ParienteBasado, session, Base, engine
+from basadobot.models import User, ParienteBasado, Pildora, session, Base, engine
 import praw
 from time import sleep
+
+#mensajes copiados de u/basedcount_bot momentaneamente
+messages = {
+            1:"Casa de cartas",
+            5:"Árbol joven",
+            10:"Silla de oficina",
+            20:"Canasta de baloncesto (llena de arena)",
+            35:"Luchador de sumo",
+            50:"Fundación de hormigón",
+            75:"Sequoia gigante",
+            100:"Empire State Building",
+            200:"Gran pirámide de Giza",
+            350:"Edificio de ensamblaje de vehículos de la ESA",
+            500:"Fábrica de Boeing Everett",
+            750:"Monte Fuji", 
+            1000:"Denali",
+            2000:"Annapurna"}
 
 class bot:
     def __init__(self, **kwargs):
@@ -13,38 +30,53 @@ class bot:
         if not pariente:
             if basado.parentId[1] == 1:
                 reci = self.reddit.comment(basado.parent_id).author
+            
             else:
                 reci = self.reddit.submission(basado.parent_id).author
 
-            recividor = session.query(User).filter(User.username == reci)
+            recibidor = session.query(User).filter(User.username == reci)
             
-            if recividor:
-                recividor.basados += 1
+            if recibidor:
+                recibidor.basados += 1
+
             else:
-                recividor = User(username=reci, basados=1)
+                recibidor = User(username=reci, basados=1)
+            
             pariente = ParienteBasado(parentId = basado.parentId,
                         submissionId = basado.link_id,
                         isComment = basado.parentId[1] == 1,
-                        autor = recividor
+                        autor = recibidor
             )
+        
         else:
-            recividor = session.query(User).filter(User.id == pariente.autorId)
+            recibidor = session.query(User).filter(User.id == pariente.autorId)
         
         commenter = session.query(User).filter(User.username == basado.author.id)
         if not commenter:
             commenter = User(username = basado.author.id)
+        
         commenter.basadosHechos.append(pariente)
         session.add(commenter)
         session.add(pariente)
-        session.add(recividor)
+        session.add(recibidor)
+
+        return recibidor
+
+    def commit_changes(self):
+        session.commit()
+
+    def dar_pildoras(self, basado, recibidor):
+        basadoNew, pillWord = basado 
+        nombrePill = basadoNew.body.lower().split(pillWord)[0].split(" ")[-1]
+        
+        pill = Pildora(name=nombrePill, recibidor=recibidor)
+        session.add(pill)
+
     def mensaje_basado(self):
         pass # TODO: Enviar mensaje a los que suben de nivel
     
-    def comprovar_nuevo_nivel(self):
-        pass
-
-    def sumar_basados(self, basado):
-        pass
+    def comprovar_mensaje(self, basado) -> bool:
+        return basado[1][1] or basado[0].basados in messages
 
     def mirar_basados(self) -> list:
         nuevosBasados = []
@@ -60,17 +92,27 @@ class bot:
             
             else:
                 continue
-            pildora = False
-            for palabra in ["pileado", "pilleado", "pilled"]:
+            
+            pildora = ""
+            for palabra in ["pileado", "pilleado", "pilled", "pildoreado"]:
                 if palabra in comment.body.lower()[len(palabraEncontrada):]:
-                    pildora = True
+                    pildora = palabra
                     break
+            
             nuevosBasados.append([comment, pildora])
 
         return nuevosBasados
 
     def run(self):
+        recibidores = []
+
         basadosActuales = self.mirar_basados()
         for basado in basadosActuales:
-            self.anadir_a_ids(basado)
-        pass
+            recibidores.append(self.modificarBasados(basado), basado)
+            if basado[1]:
+                self.dar_pildoras(basado, recibidores[-1])
+
+        session.commit()
+        for receb in recibidores:
+            if self.comprovar_mensaje(receb):
+                self.mensaje_basado()

@@ -23,7 +23,7 @@ class User(Base):
     basados = Column(Integer, default=0)
     basadosHechos = relationship("parientebasados", secondary=basadoHecho, backref=backref("basadoPorUsuarios", lazy ="dynamic"))
     parientesCreados = relationship("ParienteBasado", backref="autor")
-    pildoras = relationship("Pildora", backref="recividor")
+    pildoras = relationship("Pildora", backref="recibidor")
 
     def __repr__(self) -> str:
         return f"User(username={self.username}, basados={self.basados})"
