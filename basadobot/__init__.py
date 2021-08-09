@@ -1,5 +1,5 @@
 from praw.reddit import Submission
-from basadobot.models import User, ParienteBasado, Pildora, session, Base, engine
+from basadobot.models import User, ParienteBasado, Pildora, session
 import praw
 from time import sleep
 
