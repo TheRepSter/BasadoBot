@@ -134,6 +134,22 @@ class bot:
 
         return nuevosBasados
 
+    def mirar_otros_comandos():
+        #TODO
+        pass
+
+    def responder_otros_comandos(comandos):
+        #TODO
+        for comando in comandos:
+            if "info" == comando[1:5]:
+                message = ""
+            elif "usuariosmasbasados" == comando[1:18] or "usuariosmásbasados" == comando[1:18]:
+                message = ""
+            elif "cantidaddebasado" == comando[1:16]:
+                message = ""
+            elif "tirarpildora" == comando[1:12]:
+                message = ""
+
     def run(self):
         while True:
             recibidores = []
@@ -158,4 +174,6 @@ class bot:
                     sleep(1)
                     self.mensaje_basado(receb)
 
+            otros_comandos = self.mirar_otros_comandos()
+            self.responder_otros_comandos(otros_comandos)
             sleep(10)
