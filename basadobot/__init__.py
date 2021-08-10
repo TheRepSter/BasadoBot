@@ -106,7 +106,7 @@ class bot:
         message += "\n\n¿Alguna duda? ¡Háblame por MD!"
         recib.comment.reply(message)
 
-    def comprovar_mensaje(self, receb) -> bool:
+    def comprobar_mensaje(self, receb) -> bool:
         return receb.pill != None or receb.recibidor.basados in messages
 
     def mirar_basados(self) -> list:
@@ -154,7 +154,7 @@ class bot:
                 self.commit_changes()
 
             for receb in recibidores:
-                if self.comprovar_mensaje(receb):
+                if self.comprobar_mensaje(receb):
                     sleep(1)
                     self.mensaje_basado(receb)
 
