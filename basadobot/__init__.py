@@ -1,5 +1,5 @@
 from basadobot.models import User, ParienteBasado, Pildora, session
-from basadobot.security import security
+from basadobot.security import security1, security2
 from basadobot.data import reciber
 from praw.models import Comment
 import praw
@@ -26,15 +26,10 @@ class bot:
     def __init__(self, **kwargs):
         self.reddit = praw.Reddit(**kwargs)
 
-    def modificarBasados(self, basado):
-        pariente = session.query(ParienteBasado).filter(ParienteBasado.parentId == basado.parent_id).first()
-        if not pariente:
-            if basado.parent_id[1] == 3:
-                reci = self.reddit.comment(basado.parent_id).parent().author
-            
-            else:
-                reci = basado.submission.author
-
+    def dar_basado(self, basado):
+        pariente = security2(basado)
+        if pariente == None:
+            reci = basado.parent().author
             recibidor = session.query(User).filter(User.username == str(reci)).first()
             
             if recibidor:
@@ -49,15 +44,18 @@ class bot:
                         autor = recibidor
             )
         
+        elif pariente == False:
+            return
+
         else:
-            recibidor = session.query(User).filter(User.id == pariente.autorId)
+            recibidor = session.query(User).filter(User.id == pariente.autorId).first()
         
-        commenter = session.query(User).filter(User.username == basado.author.id).first()
+        commenter = session.query(User).filter(User.username == str(basado.author)).first()
         if not commenter:
-            commenter = User(username = basado.author.id)
+            commenter = User(username = str(basado.author))
         
-        commenter.basadosHechos.append(pariente)
-        if security(commenter, pariente, recibidor):
+        if security1(commenter, pariente, recibidor):
+            commenter.basadosHechos.append(pariente)
             session.add(commenter)
             session.add(pariente)
             session.add(recibidor)
@@ -68,61 +66,53 @@ class bot:
         print("Commited changes!")
         session.commit()
 
-    def dar_pildoras(self, basado, recibidor):
-        basadoNew, pillWord = basado 
-        nombrePill = basadoNew.body.lower().split(pillWord)[0].split(" ")[-1]
+    def dar_pildoras(self, recibidor, basado, pillWord): 
+        nombrePill = basado.body.lower().split(pillWord)[0].split(" ")[-1]
         
         pill = Pildora(name=nombrePill, recibidor=recibidor)
         session.add(pill)
         return pill
 
     def mensaje_basado(self, recib):
-        if recib.pill and recib.recibidor.basados in messages:
-            message = f"""¡El usuario u/{recib.recibidor.username} ha conseguido una pildora y ha subido de nivel a la vez!
-            
-            La pildora es {recib.pill.name}.
-            
-            Ahora es nivel {recib.recibidor.basados}:{messages.get(recib.recibidor.basados)}
+        if recib.pill != None and recib.recibidor.basados in messages:
+            message = "\n\n".join([
+                f"¡El usuario u/{recib.recibidor.username} ha conseguido una pildora y ha subido de nivel a la vez!",
+                f"La píldora es {recib.pill.name}.",
+                f"Ahora es nivel {recib.recibidor.basados}:{messages.get(recib.recibidor.basados)}",
+                f"Tiene las siguientes píldoras: {', '.join(list(map(lambda x: x.name, recib.recibidor.pildoras)))}"
+            ])
 
-            Tiene las siguientes pildoras: {', '.join(list(map(lambda x: x.name, recib.recibidor.pildoras)))}
-
-            ¿Alguna duda? ¡Hablame por MD!
-            """
-        elif recib.pill:
+        elif recib.pill != None:
             num = recib.recibidor.basados
             nombre = messages.get(num)
             while not nombre:
                 num -= 1
                 nombre = messages.get(num)
 
-            message = f"""¡El usuario u/{recib.recibidor.username} ha conseguido una pildora!
-            
-            La pildora es {recib.pill.name}.
-            
-            Él es de nivel {recib.recibidor.basados}:{nombre}
-            
-            Tiene las siguientes pildoras: {', '.join(list(map(lambda x: x.name, recib.recibidor.pildoras)))}
-
-            ¿Alguna duda? ¡Hablame por MD!
-            """
+            message = "\n\n".join([
+                f"¡El usuario u/{recib.recibidor.username} ha conseguido una píldora!",
+                f"La píldora es {recib.pill.name}.",
+                f"Él es de nivel {recib.recibidor.basados}:{nombre}",
+                f"Tiene las siguientes píldoras: {', '.join(list(map(lambda x: x.name, recib.recibidor.pildoras)))}"
+            ])
 
         elif recib.recibidor.basados in messages:
-            message = f"""¡El usuario u/{recib.recibidor.username} ha subido de nivel!
+            message = "\n\n".join([
+                f"¡El usuario u/{recib.recibidor.username} ha subido de nivel!",
+                f"Ahora es nivel {recib.recibidor.basados}:{messages.get(recib.recibidor.basados)}",
+                f"Tiene las siguientes píldoras: {', '.join(list(map(lambda x: x.name, recib.recibidor.pildoras)))}"
+            ])
             
-            Ahora es nivel {recib.recibidor.basados}:{messages.get(recib.recibidor.basados)}
-            
-            Tiene las siguientes pildoras: {', '.join(list(map(lambda x: x.name, recib.recibidor.pildoras)))}
+        message += "\n\n¿Alguna duda? ¡Háblame por MD!"
+        if isinstance(recib.comment, Comment):
+            print(True)
+            recib.comment.reply(message)
+        else:
+            print(False)
+            recib.comment.add_comment(message)
 
-            ¿Alguna duda? ¡Hablame por MD!
-            """
-            if isinstance(recib.comment, Comment):
-                recib.comment.reply(message)
-            else:
-                recib.comment.add_comment(message)
-
-        
     def comprovar_mensaje(self, receb) -> bool:
-        return receb.pill or receb.recibidor.basados in messages
+        return receb.pill != None or receb.recibidor.basados in messages
 
     def mirar_basados(self) -> list:
         nuevosBasados = []
@@ -131,7 +121,7 @@ class bot:
 
         for comment in subreddit_inspection.comments(limit=100):
             palabraEncontrada = ""
-            for palabra in ["basado", "based"]:
+            for palabra in ["basado", "basada", "based"]:
                 if palabra in comment.body.lower()[:len(palabra)]:
                     palabraEncontrada = palabra
                     break
@@ -140,7 +130,7 @@ class bot:
                 continue
             
             pildora = ""
-            for palabra in ["pileado", "pilleado", "pilled", "pildoreado"]:
+            for palabra in ["pileado", "pilleado", "pildoreado", "pileada", "pilleada", "pildoreada", "pilled"]:
                 if palabra in comment.body.lower()[len(palabraEncontrada):]:
                     pildora = palabra
                     break
@@ -155,15 +145,20 @@ class bot:
 
             basadosActuales = self.mirar_basados()
             for basado in basadosActuales:
-                recibe = self.modificarBasados(basado[0])
+                recibe = self.dar_basado(basado[0])
                 if not recibe:
                     continue
+
                 pill = None
                 if basado[1]:
-                    pill = self.dar_pildoras(basado[0], basado[1])
+                    pill = self.dar_pildoras(recibe, basado[0], basado[1])
+
                 recibidores.append(reciber(recibe, basado[0], pill))
 
-            self.commit_changes()
+            if len(recibidores):
+                print(recibidores)
+                self.commit_changes()
+
             for receb in recibidores:
                 if self.comprovar_mensaje(receb):
                     sleep(1)

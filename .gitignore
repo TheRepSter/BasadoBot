@@ -2,3 +2,5 @@ secrets.py
 __pycache__
 .vscode
 basadobot/security.py
+restartdata.py
+data.db
