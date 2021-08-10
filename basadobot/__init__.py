@@ -104,12 +104,7 @@ class bot:
             ])
             
         message += "\n\n¿Alguna duda? ¡Háblame por MD!"
-        if isinstance(recib.comment, Comment):
-            print(True)
-            recib.comment.reply(message)
-        else:
-            print(False)
-            recib.comment.add_comment(message)
+        recib.comment.reply(message)
 
     def comprovar_mensaje(self, receb) -> bool:
         return receb.pill != None or receb.recibidor.basados in messages
@@ -156,7 +151,6 @@ class bot:
                 recibidores.append(reciber(recibe, basado[0], pill))
 
             if len(recibidores):
-                print(recibidores)
                 self.commit_changes()
 
             for receb in recibidores:
