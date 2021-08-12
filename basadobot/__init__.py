@@ -196,6 +196,12 @@ class bot:
                     "He sido creado por u/TheRepSter, por simple diversión.",
                     "Cuento \"basados\", es decir, cuando estás de acuerdo con una persona.",
                     "También llevo la cuenta de las pildoras que tiene cada usuario.",
+                    "Los comandos son los siguientes:",
+                    "- /info: muestra este mensaje.",
+                    "- /usuariosmasbasados (o /usuariosmásbasados): muestra el top 10 de basados.",
+                    "- /cantidaddebasado \{username\}: muestra los basados según el username",
+                    "- /tirarpildora \{pildora\}: tira la pildora que mencione el usuario que pone el comando",
+                    ""
                     "Soy de código abierto, es decir, ¡puedes ver mi código e incluso aportar!",
                     "[Haz click aqui para ver el código.](https://github.com/TheRepSter/BasadoBot)",
                     "¿Tienes alguna duda? ¡Háblame por MD a mi o a mi creador!"
@@ -214,17 +220,31 @@ class bot:
                 usuario = session.query(User).filter(User.username == toBuscar).first()
                 if usuario:
                     message = f"El usuario {usuario.username} tiene {usuario.basados} basados."
+                    message += f"\n\nTiene las siguientes píldoras: {', '.join(list(map(lambda x: x.name, usuario.pildoras)))}"
 
                 else:
                     message = f"El usuario {toBuscar} no exise o no ha recibido ni hecho ningun basado."
 
             elif "tirarpildora" == comando.body[1:13]:
-                message = ""
+                autor = session.query(User).filter(User.username == str(comando.author)).first()
+                toBuscar = comando.body.split(" ")[1]
+                pills = session.query(Pildora).filter(Pildora.name == toBuscar).all()
+                if pills:
+                    for pill in pills:
+                        if pill.recibidor.id == autor.id:
+                            autor.pildoras.remove(pill)
+                            session.add(autor)
+                            message = f"La pildora {toBuscar} ha sido eliminada."
+                            break
+                    
+                    else:
+                        message = f"¡No tienes la pildora {toBuscar}!"
+                else:
+                    message = f"¡No tienes la pildora {toBuscar}!"
                 
             else:
-                print("Else statement")
-                print(comando.body[1:18], comando.body)
                 continue
+
             comando.reply(message)
 
     #Funcion principal del bot
