@@ -173,12 +173,21 @@ class bot:
         return nuevosBasados
 
     #Funcion por hacer, mira otros comandos como info, usuariosmasbasados, cantidaddebasado, tirarpildora...
-    def mirar_otros_comandos():
-        #TODO
-        pass
+    def mirar_otros_comandos(self) -> list:
+        comentarios = []
+
+        #Subreddit del donde buscara los mensajes
+        subreddit_inspection = self.reddit.subreddit("BasadoBot")
+
+        #Mira los ultimos 100 comentarios y en caso que inicie con "/" se añadirá a posibles respuestas
+        for comment in subreddit_inspection.comments(limit=100):
+            if "/" == comment.body[0]:
+                comentarios.append(comment)
+        
+        return comentarios
 
     #Funcion que responde a los comandos
-    def responder_otros_comandos(comandos):
+    def responder_otros_comandos(self, comandos):
         #TODO
         for comando in comandos:
             if "info" == comando[1:5]:
