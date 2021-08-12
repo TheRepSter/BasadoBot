@@ -200,13 +200,20 @@ class bot:
                     "[Haz click aqui para ver el código.](https://github.com/TheRepSter/BasadoBot)",
                     "¿Tienes alguna duda? ¡Háblame por MD a mi o a mi creador!"
                 ])
-            elif "usuariosmasbasados" == comando.body[1:18] or "usuariosmásbasados" == comando.body[1:18]:
-                message = ""
-            elif "cantidaddebasado" == comando.body[1:16]:
-                message = ""
-            elif "tirarpildora" == comando.body[1:12]:
-                message = ""
+            elif "usuariosmasbasados" == comando.body[1:19] or "usuariosmásbasados" == comando.body[1:19]:
+                usuarios = session.query(User).order_by(User.basados.desc()).limit(10).all()
+                message = "El Top 10 de los usuarios más basados es actualmente:\n\n"
+                for numb, i in enumerate(usuarios):
+                    message += f"{numb+1}. [{i.username}](https://reddit.com/user/{i.username}): {i.basados}\n\n"
 
+            elif "cantidaddebasado" == comando.body[1:17]:
+                message = ""
+            elif "tirarpildora" == comando.body[1:13]:
+                message = ""
+            else:
+                print("Else statement")
+                print(comando.body[1:18], comando.body)
+                continue
             comando.reply(message)
 
     #Funcion principal del bot
