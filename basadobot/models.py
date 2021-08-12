@@ -13,6 +13,7 @@ basadoHecho = Table('basadoshechos',
                     Column("pariente", Integer, ForeignKey("parientebasados.id"))
 )
 
+#Clase User
 class User(Base):
     __tablename__ = "users"
 
@@ -26,6 +27,7 @@ class User(Base):
     def __repr__(self) -> str:
         return f"User(username={self.username}, basados={self.basados})"
 
+#Clase ParienteBasado
 class ParienteBasado(Base):
     __tablename__ = "parientebasados"
     id = Column(Integer, primary_key=True)
@@ -37,6 +39,7 @@ class ParienteBasado(Base):
     def __repr__(self) -> str:
         return f"ParienteBasado(parentId={self.parentId}, submissionId={self.submissionId}, isComment={self.isComment})"
 
+#Clase Pildora
 class Pildora(Base):
     __tablename__ = "pildoras"
     id = Column(Integer, primary_key=True)
