@@ -207,9 +207,20 @@ class bot:
                     message += f"{numb+1}. [{i.username}](https://reddit.com/user/{i.username}): {i.basados}\n\n"
 
             elif "cantidaddebasado" == comando.body[1:17]:
-                message = ""
+                toBuscar = comando.body.split(" ")[1]
+                if "u/" in toBuscar:
+                    toBuscar = toBuscar.split("/")[1]
+
+                usuario = session.query(User).filter(User.username == toBuscar).first()
+                if usuario:
+                    message = f"El usuario {usuario.username} tiene {usuario.basados} basados."
+
+                else:
+                    message = f"El usuario {toBuscar} no exise o no ha recibido ni hecho ningun basado."
+
             elif "tirarpildora" == comando.body[1:13]:
                 message = ""
+                
             else:
                 print("Else statement")
                 print(comando.body[1:18], comando.body)
