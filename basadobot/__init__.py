@@ -1,7 +1,6 @@
-from basadobot.models import User, ParienteBasado, Pildora, session
+from basadobot.models import User, ParienteBasado, Pildora, OtherComment, session
 from basadobot.security import security1, security2
 from basadobot.data import reciber
-from praw.models import Comment
 import praw
 from time import sleep
 
@@ -86,8 +85,8 @@ class bot:
             return recibidor
 
     #Self explainatory
-    def commit_changes(self):
-        print("Commited changes!")
+    def commit_changes(self, changes=True):
+        print("Commited changes!") if changes else print("Commited othercommands!")
         session.commit()
 
     #Funcion para dar las pildoras (en caso que tenga) cuando hay un basado
@@ -136,7 +135,7 @@ class bot:
                 f"Tiene las siguientes píldoras: {', '.join(list(map(lambda x: x.name, recib.recibidor.pildoras)))}"
             ])
         #Ultima parte del mensaje y lo envia al comentario
-        message += "\n\n¿Alguna duda? ¡Háblame por MD!"
+        message += "\n\n¿Alguna duda? ¡Haz /info o háblame por MD a mi o a mi creador!"
         recib.comment.reply(message)
 
     #Comprueba si cumple los requisitos para tener mensaje
@@ -176,28 +175,39 @@ class bot:
     def mirar_otros_comandos(self) -> list:
         comentarios = []
 
-        #Subreddit del donde buscara los mensajes
+        #Subreddit del donde buscara los mensajes.
         subreddit_inspection = self.reddit.subreddit("BasadoBot")
 
-        #Mira los ultimos 100 comentarios y en caso que inicie con "/" se añadirá a posibles respuestas
+        #Mira los ultimos 100 comentarios y en caso que inicie con "/" y no esté en la
+        #database se añadirá a posibles respuestas.
         for comment in subreddit_inspection.comments(limit=100):
-            if "/" == comment.body[0]:
+            if "/" == comment.body[0] and not session.query(OtherComment).filter(OtherComment.commentId == comment.id).first():
+                session.add(OtherComment(commentId=comment.id))
                 comentarios.append(comment)
         
         return comentarios
 
     #Funcion que responde a los comandos
     def responder_otros_comandos(self, comandos):
-        #TODO
         for comando in comandos:
-            if "info" == comando[1:5]:
+            if "info" == comando.body[1:5]:
+                message = "\n\n".join([
+                    "¡Hola! ¡Soy un bot llamado BasadoBot!",
+                    "He sido creado por u/TheRepSter, por simple diversión.",
+                    "Cuento \"basados\", es decir, cuando estás de acuerdo con una persona.",
+                    "También llevo la cuenta de las pildoras que tiene cada usuario.",
+                    "Soy de código abierto, es decir, ¡puedes ver mi código e incluso aportar!",
+                    "[Haz click aqui para ver el código.](https://github.com/TheRepSter/BasadoBot)",
+                    "¿Tienes alguna duda? ¡Háblame por MD a mi o a mi creador!"
+                ])
+            elif "usuariosmasbasados" == comando.body[1:18] or "usuariosmásbasados" == comando.body[1:18]:
                 message = ""
-            elif "usuariosmasbasados" == comando[1:18] or "usuariosmásbasados" == comando[1:18]:
+            elif "cantidaddebasado" == comando.body[1:16]:
                 message = ""
-            elif "cantidaddebasado" == comando[1:16]:
+            elif "tirarpildora" == comando.body[1:12]:
                 message = ""
-            elif "tirarpildora" == comando[1:12]:
-                message = ""
+
+            comando.reply(message)
 
     #Funcion principal del bot
     def run(self):
@@ -226,4 +236,6 @@ class bot:
 
             otros_comandos = self.mirar_otros_comandos()
             self.responder_otros_comandos(otros_comandos)
+            if len(otros_comandos):
+                self.commit_changes(False)
             sleep(10)

@@ -49,5 +49,11 @@ class Pildora(Base):
     def __repr__(self) -> str:
         return f"Pildora(name={self.name})"
 
+#Clase OtherComment
+class OtherComment(Base):
+    __tablename__ = "othercomments"
+    id = Column(Integer, primary_key=True)
+    commentId = Column(String(7), unique=True, nullable=False)
+
 sessionClass = sessionmaker(engine)
 session = sessionClass()
