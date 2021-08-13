@@ -1,3 +1,5 @@
+# coding=UTF-8
+
 from basadobot.models import User, ParienteBasado, Pildora, OtherComment, session
 from basadobot.security import security1, security2
 from basadobot.data import reciber
