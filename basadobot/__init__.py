@@ -195,22 +195,25 @@ class bot:
                     "¡Hola! ¡Soy un bot llamado BasadoBot!",
                     "He sido creado por u/TheRepSter, por simple diversión.",
                     "Cuento \"basados\", es decir, cuando estás de acuerdo con una persona.",
-                    "También llevo la cuenta de las pildoras que tiene cada usuario.",
+                    "También llevo la cuenta de las píldoras que tiene cada usuario.",
                     "Los comandos son los siguientes:",
                     "- /info: muestra este mensaje.",
                     "- /usuariosmasbasados (o /usuariosmásbasados): muestra el top 10 de basados.",
                     "- /cantidaddebasado \{username\}: muestra los basados según el username",
-                    "- /tirarpildora \{pildora\}: tira la pildora que mencione el usuario que pone el comando",
+                    "- /tirarpildora \{píldora\}: tira la píldora que mencione el usuario que pone el comando",
                     ""
                     "Soy de código abierto, es decir, ¡puedes ver mi código e incluso aportar!",
-                    "[Haz click aqui para ver el código.](https://github.com/TheRepSter/BasadoBot)",
+                    "[Haz click aquí para ver el código.](https://github.com/TheRepSter/BasadoBot)",
                     "¿Tienes alguna duda? ¡Háblame por MD a mi o a mi creador!"
                 ])
+                
             elif "usuariosmasbasados" == comando.body[1:19] or "usuariosmásbasados" == comando.body[1:19]:
                 usuarios = session.query(User).order_by(User.basados.desc()).limit(10).all()
                 message = "El Top 10 de los usuarios más basados es actualmente:\n\n"
                 for numb, i in enumerate(usuarios):
                     message += f"{numb+1}. [{i.username}](https://reddit.com/user/{i.username}): {i.basados}\n\n"
+                
+                message += "\n\n¿Alguna duda? ¡Haz /info o háblame por MD a mi o a mi creador!"
 
             elif "cantidaddebasado" == comando.body[1:17]:
                 toBuscar = comando.body.split(" ")[1]
@@ -223,7 +226,9 @@ class bot:
                     message += f"\n\nTiene las siguientes píldoras: {', '.join(list(map(lambda x: x.name, usuario.pildoras)))}"
 
                 else:
-                    message = f"El usuario {toBuscar} no exise o no ha recibido ni hecho ningun basado."
+                    message = f"El usuario {toBuscar} no existe o no ha recibido ni hecho ningún basado."
+
+                message += "\n\n¿Alguna duda? ¡Haz /info o háblame por MD a mi o a mi creador!"
 
             elif "tirarpildora" == comando.body[1:13]:
                 autor = session.query(User).filter(User.username == str(comando.author)).first()
@@ -234,13 +239,16 @@ class bot:
                         if pill.recibidor.id == autor.id:
                             autor.pildoras.remove(pill)
                             session.add(autor)
-                            message = f"La pildora {toBuscar} ha sido eliminada."
+                            message = f"La píldora {toBuscar} ha sido eliminada."
                             break
                     
                     else:
-                        message = f"¡No tienes la pildora {toBuscar}!"
+                        message = f"¡No tienes la píldora {toBuscar}!"
+
                 else:
-                    message = f"¡No tienes la pildora {toBuscar}!"
+                    message = f"¡No tienes la píldora {toBuscar}!"
+
+                message += "\n\n¿Alguna duda? ¡Haz /info o háblame por MD a mi o a mi creador!"
                 
             else:
                 continue
