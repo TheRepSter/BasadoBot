@@ -205,7 +205,7 @@ class bot:
                     "- /tirarpildora \{píldora\}: tira la píldora que mencione el usuario que pone el comando",
                     ""
                     "Soy de código abierto, es decir, ¡puedes ver mi código e incluso aportar!",
-                    "[Haz click aquí para ver el código.](https://github.com/TheRepSter/BasadoBot)",
+                    "[Haz click aquí para ver el código.](https://github.com/TheRepSter/BasadoBot-Reddit)",
                     "¿Tienes alguna duda? ¡Háblame por MD a mi o a mi creador!"
                 ])
                 
