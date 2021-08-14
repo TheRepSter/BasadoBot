@@ -14,7 +14,7 @@ def security2(basado):
             reci = basado.parent().is_robot_indexable
         
         except AttributeError as e:
-            reci = basado.parent().author == "None" or basado.parent().body == "[removed]"
+            reci = basado.parent().author != "None" or basado.parent().body != "[removed]"
         
         name = basado.parent().author
 
