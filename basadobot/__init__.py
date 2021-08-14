@@ -101,29 +101,16 @@ class bot:
 
     #Envia el mensaje anunciando el basado
     def mensaje_basado(self, recib):
+        #Si su nivel es 1, no decir nada
+        if recib.recibidor.basados == 1:
+            return
+
         #Si tiene pildora y tiene subida de nivel asigna el mensaje a lo de abajo
         if recib.pill != None and recib.recibidor.basados in messages:
             message = "\n\n".join([
                 f"¡El usuario u/{recib.recibidor.username} ha conseguido una pildora y ha subido de nivel a la vez!",
                 f"La píldora es {recib.pill.name}.",
                 f"Ahora es nivel {recib.recibidor.basados}:{messages.get(recib.recibidor.basados)}",
-                f"Tiene las siguientes píldoras: {', '.join(list(map(lambda x: x.name, recib.recibidor.pildoras)))}"
-            ])
-
-        #Si tiene pildora y pero no subida asigna el mensaje a lo de abajo
-        elif recib.pill != None:
-
-            #Coge el numero de basados y consigue el nombre del ultimo rango conseguido
-            num = recib.recibidor.basados
-            nombre = messages.get(num)
-            while not nombre:
-                num -= 1
-                nombre = messages.get(num)
-
-            message = "\n\n".join([
-                f"¡El usuario u/{recib.recibidor.username} ha conseguido una píldora!",
-                f"La píldora es {recib.pill.name}.",
-                f"Él es de nivel {recib.recibidor.basados}:{nombre}",
                 f"Tiene las siguientes píldoras: {', '.join(list(map(lambda x: x.name, recib.recibidor.pildoras)))}"
             ])
 
