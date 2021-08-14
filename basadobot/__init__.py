@@ -1,5 +1,3 @@
-# coding=UTF-8
-
 from basadobot.models import User, ParienteBasado, Pildora, OtherComment, session
 from basadobot.security import security1, security2
 from basadobot.data import reciber
@@ -206,7 +204,7 @@ class bot:
                     ""
                     "Soy de código abierto, es decir, ¡puedes ver mi código e incluso aportar!",
                     "[Haz click aquí para ver el código.](https://github.com/TheRepSter/BasadoBot-Reddit)",
-                    "¿Tienes alguna duda? ¡Háblame por MD a mi o a mi creador!"
+                    "¿Tienes alguna duda? ¡[Lee el post completo](https://www.reddit.com/r/Asi_va_Espana/comments/p4he0b/anuncio_basadobot_el_bot_de_los_basados/) o háblame por MD a mi o a mi creador!"
                 ])
                 
             elif "usuariosmasbasados" == comando.body[1:19] or "usuariosmásbasados" == comando.body[1:19]:
