@@ -147,7 +147,7 @@ class bot:
         nuevosBasados = []
 
         #Subreddit del donde buscara los mensajes
-        subreddit_inspection = self.reddit.subreddit("BasadoBot")
+        subreddit_inspection = self.reddit.subreddit("Asi_va_Espana")
 
         #Mira los ultimos 100 comentarios y en caso que inicie con la palabra deseada continua,
         #en caso contrario pasa de comentario, si encuentra la palabra tambien mira si tiene pildora
@@ -176,7 +176,7 @@ class bot:
         comentarios = []
 
         #Subreddit del donde buscara los mensajes.
-        subreddit_inspection = self.reddit.subreddit("BasadoBot")
+        subreddit_inspection = self.reddit.subreddit("Asi_va_Espana")
 
         #Mira los ultimos 100 comentarios y en caso que inicie con "/" y no esté en la
         #database se añadirá a posibles respuestas.
