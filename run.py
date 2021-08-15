@@ -1,5 +1,7 @@
 from secrets import client_secret, password
 from basadobot import bot
+from time import sleep
+from prawcore.exceptions import RequestException
 
 if __name__ == '__main__':
     BasadoBot = bot(
@@ -9,5 +11,10 @@ if __name__ == '__main__':
         username = "BasadoBot",
         password = password
     )
-    BasadoBot.run()
+    while True:
+        try:
+            BasadoBot.run()
+        except RequestException:
+            print("RequestException")
+            sleep(10)
         
