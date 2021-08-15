@@ -67,6 +67,7 @@ class bot:
         #tiene que existir el recibidor.
         else:
             recibidor = session.query(User).filter(User.id == pariente.autorId).first()
+            recibidor.basados += 1
         
         #Un basadobot.models.User o None.
         commenter = session.query(User).filter(User.username == str(basado.author)).first()
