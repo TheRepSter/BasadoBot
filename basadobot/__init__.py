@@ -184,8 +184,8 @@ class bot:
             if abs(comment.score) >= 10 and time() - comment.created_utc <= 600 and not session.query(OtherComment).filter(OtherComment.commentId == comment.id).first():
                 frase = True
                 session.add(OtherComment(commentId=comment.id))
-                comment.reply(generador_frase(str(comment.author)))
-                sleep(1)
+                comment.reply(generador_frase(str(comment.author)) + "\n\n¿Alguna duda? ¡Haz /info o háblame por MD a mi o a mi creador!")
+                sleep(2.5)
 
         return frase
 
@@ -203,7 +203,7 @@ class bot:
                     "- /usuariosmasbasados (o /usuariosmásbasados): muestra el top 10 de basados.",
                     "- /cantidaddebasado \{username\}: muestra los basados según el username",
                     "- /tirarpildora \{píldora\}: tira la píldora que mencione el usuario que pone el comando",
-                    ""
+                    "A veces suelto alguna que otra frase un tanto de cuñado."
                     "Soy de código abierto, es decir, ¡puedes ver mi código e incluso aportar!",
                     "[Haz click aquí para ver el código.](https://github.com/TheRepSter/BasadoBot-Reddit)",
                     "¿Tienes alguna duda? ¡[Lee el post completo](https://www.reddit.com/r/Asi_va_Espana/comments/p4he0b/anuncio_basadobot_el_bot_de_los_basados/) o háblame por MD a mi o a mi creador!"
@@ -279,7 +279,7 @@ class bot:
 
             for receb in recibidores:
                 if self.comprobar_mensaje(receb):
-                    sleep(1)
+                    sleep(2.5)
                     self.mensaje_basado(receb)
 
             otros_comandos = self.mirar_otros_comandos()
