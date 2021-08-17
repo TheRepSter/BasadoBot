@@ -7,11 +7,10 @@ from sqlalchemy.ext.declarative import declarative_base
 engine = create_engine('sqlite:///data.db')
 Base = declarative_base()
 
-basadoHecho = Table('basadoshechos',
-                    Base.metadata,
-                    Column("user", Integer, ForeignKey("users.id")),
-                    Column("pariente", Integer, ForeignKey("parientebasados.id"))
-)
+class BasadoHecho(Base):
+    __tablename__ = 'basadoshechos'
+    user = Column(Integer, ForeignKey("users.id")),
+    pariente = Column(Integer, ForeignKey("parientebasados.id"))
 
 #Clase User
 class User(Base):
