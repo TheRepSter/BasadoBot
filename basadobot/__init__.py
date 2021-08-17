@@ -135,11 +135,11 @@ class bot:
         nuevosBasados = []
 
         #Subreddit del donde buscara los mensajes
-        subreddit_inspection = self.reddit.subreddit("Asi_va_Espana")
+        subreddit_inspection = self.reddit.subreddit("BasadoBot")
 
         #Mira los ultimos 100 comentarios y en caso que inicie con la palabra deseada continua,
         #en caso contrario pasa de comentario, si encuentra la palabra tambien mira si tiene pildora
-        for comment in subreddit_inspection.comments(limit=100):
+        for comment in subreddit_inspection.comments(limit=200):
             palabraEncontrada = ""
             for palabra in ["basado", "basada", "based"]:
                 if palabra in comment.body.lower()[:len(palabra)]:
@@ -164,7 +164,7 @@ class bot:
         comentarios = []
 
         #Subreddit del donde buscara los mensajes.
-        subreddit_inspection = self.reddit.subreddit("Asi_va_Espana")
+        subreddit_inspection = self.reddit.subreddit("BasadoBot")
 
         #Mira los ultimos 100 comentarios y en caso que inicie con "/" y no esté en la
         #database se añadirá a posibles respuestas.
@@ -176,7 +176,7 @@ class bot:
         return comentarios
 
     def frase_de_cunado(self):
-        subreddit_inspection = self.reddit.subreddit("Asi_va_Espana")
+        subreddit_inspection = self.reddit.subreddit("BasadoBot")
 
         frase = False
 
