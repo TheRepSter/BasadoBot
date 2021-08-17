@@ -9,8 +9,8 @@ Base = declarative_base()
 
 class BasadoHecho(Base):
     __tablename__ = 'basadoshechos'
-    user = Column(Integer, ForeignKey("users.id")),
-    pariente = Column(Integer, ForeignKey("parientebasados.id"))
+    user = Column(Integer, ForeignKey("users.id"), primary_key=True)
+    pariente = Column(Integer, ForeignKey("parientebasados.id"), primary_key=True)
 
 #Clase User
 class User(Base):
