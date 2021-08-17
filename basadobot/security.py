@@ -1,7 +1,7 @@
 from basadobot.models import ParienteBasado, session
 from sqlalchemy.exc import IntegrityError
 
-def security1(commenter, pariente, recibidor):
+def security1(commenter, pariente):
     return pariente in commenter.basadosHechos
 
 def security2(basado):
