@@ -102,9 +102,6 @@ class bot:
 
     #Envia el mensaje anunciando el basado
     def mensaje_basado(self, recib):
-        #Si su nivel es 1, no decir nada
-        if recib.recibidor.basados == 1:
-            return
 
         #Si tiene pildora y tiene subida de nivel asigna el mensaje a lo de abajo
         if recib.pill != None and recib.recibidor.basados in messages:
@@ -123,8 +120,9 @@ class bot:
                 f"Tiene las siguientes píldoras: {', '.join(list(map(lambda x: x.name, recib.recibidor.pildoras)))}"
             ])
         #Ultima parte del mensaje y lo envia al comentario
-        message += "\n\n¿Alguna duda? ¡Haz /info o háblame por MD a mi o a mi creador!"
-        recib.comment.reply(message)
+        if recib.recibidor.basados != 1:
+            message += "\n\n¿Alguna duda? ¡Haz /info o háblame por MD a mi o a mi creador!"
+            recib.comment.reply(message)
 
     #Comprueba si cumple los requisitos para tener mensaje
     def comprobar_mensaje(self, receb) -> bool:
