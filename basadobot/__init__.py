@@ -1,8 +1,9 @@
 from basadobot.models import User, ParienteBasado, Pildora, OtherComment, session
 from basadobot.security import security1, security2
 from basadobot.data import reciber
+from basadobot.cunado import generador_frase
 import praw
-from time import sleep
+from time import sleep, time
 
 #Mensajes copiados de u/basedcount_bot momentaneamente.
 messages = {
@@ -102,10 +103,10 @@ class bot:
 
     #Envia el mensaje anunciando el basado
     def mensaje_basado(self, recib):
-
+        message = ""
         #Si tiene pildora y tiene subida de nivel asigna el mensaje a lo de abajo
         if recib.pill != None and recib.recibidor.basados in messages:
-            message = "\n\n".join([
+            message += "\n\n".join([
                 f"¡El usuario u/{recib.recibidor.username} ha conseguido una pildora y ha subido de nivel a la vez!",
                 f"La píldora es {recib.pill.name}.",
                 f"Ahora es nivel {recib.recibidor.basados}:{messages.get(recib.recibidor.basados)}",
@@ -114,13 +115,14 @@ class bot:
 
         #Si tiene subida pero no tiene pildora asigna el mensaje a lo de abajo
         elif recib.recibidor.basados in messages:
-            message = "\n\n".join([
+            message += "\n\n".join([
                 f"¡El usuario u/{recib.recibidor.username} ha subido de nivel!",
                 f"Ahora es nivel {recib.recibidor.basados}:{messages.get(recib.recibidor.basados)}",
                 f"Tiene las siguientes píldoras: {', '.join(list(map(lambda x: x.name, recib.recibidor.pildoras)))}"
             ])
+
         #Ultima parte del mensaje y lo envia al comentario
-        if recib.recibidor.basados != 1:
+        if recib.recibidor.basados != 1 and message:
             message += "\n\n¿Alguna duda? ¡Haz /info o háblame por MD a mi o a mi creador!"
             recib.comment.reply(message)
 
@@ -172,6 +174,20 @@ class bot:
                 comentarios.append(comment)
         
         return comentarios
+
+    def frase_de_cunado(self):
+        subreddit_inspection = self.reddit.subreddit("Asi_va_Espana")
+
+        frase = False
+
+        for comment in subreddit_inspection.comments(limit=100):
+            if abs(comment.score) >= 10 and time() - comment.created_utc <= 600 and not session.query(OtherComment).filter(OtherComment.commentId == comment.id).first():
+                frase = True
+                session.add(OtherComment(commentId=comment.id))
+                comment.reply(generador_frase(str(comment.author)))
+                sleep(1)
+
+        return frase
 
     #Funcion que responde a los comandos
     def responder_otros_comandos(self, comandos):
@@ -268,6 +284,8 @@ class bot:
 
             otros_comandos = self.mirar_otros_comandos()
             self.responder_otros_comandos(otros_comandos)
-            if len(otros_comandos):
+            frase = self.frase_de_cunado()
+            if len(otros_comandos) or frase:
                 self.commit_changes(False)
+
             sleep(10)
