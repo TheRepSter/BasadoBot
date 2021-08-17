@@ -19,7 +19,7 @@ class User(Base):
     id = Column(Integer, primary_key=True)
     username = Column(String(20), unique=True, nullable=False)
     basados = Column(Integer, default=0)
-    basadosHechos = relationship("ParienteBasado", secondary=basadoHecho, backref=backref("basadoPorUsuarios", lazy ="dynamic"))
+    basadosHechos = relationship("ParienteBasado", secondary="basadoshechos")
     parientesCreados = relationship("ParienteBasado", backref="autor")
     pildoras = relationship("Pildora", backref="recibidor")
 
@@ -32,6 +32,7 @@ class ParienteBasado(Base):
     id = Column(Integer, primary_key=True)
     parentId = Column(String(9), unique=True, nullable=False)
     submissionId = Column(String(6), nullable=False)
+    basadosHechos = relationship("User", secondary="basadoshechos")
     isComment = Column(Boolean, nullable=False)
     autorId = Column(Integer, ForeignKey("users.id"))
 
