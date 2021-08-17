@@ -1,5 +1,8 @@
 from basadobot.models import ParienteBasado, User, BasadoHecho, session
 from sqlalchemy.exc import IntegrityError
+import warnings
+
+warnings.filterwarnings('ignore')
 
 def security1(commenter, pariente):
     return not session.query(ParienteBasado, User).filter(BasadoHecho.user == commenter.id, BasadoHecho.pariente == pariente.id).first()

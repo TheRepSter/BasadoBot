@@ -4,6 +4,9 @@ from basadobot.data import reciber
 from basadobot.cunado import generador_frase
 import praw
 from time import sleep, time
+import warnings
+
+warnings.filterwarnings('ignore')
 
 #Mensajes copiados de u/basedcount_bot momentaneamente.
 messages = {
@@ -45,12 +48,8 @@ class bot:
             recibidor = session.query(User).filter(User.username == str(reci)).first()
             
             #Si existe (!None), se puede sumar 1, en caso contrario no se puede hacer.
-            if recibidor:
-                recibidor.basados += 1
-
-            #Si no se puede hacer, crea un nuevo basadobot.models.User.
-            else:
-                recibidor = User(username=str(reci), basados=1)
+            if not recibidor:
+                recibidor = User(username=str(reci), basados=0)
             
             #Aqui crea el basadobot.models.ParienteBasado, ya que no estaba creado antes.
             pariente = ParienteBasado(parentId = basado.parent_id,
@@ -68,7 +67,6 @@ class bot:
         #tiene que existir el recibidor.
         else:
             recibidor = session.query(User).filter(User.id == pariente.autorId).first()
-            recibidor.basados += 1
         
         #Un basadobot.models.User o None.
         commenter = session.query(User).filter(User.username == str(basado.author)).first()
@@ -79,6 +77,7 @@ class bot:
         
         #Si la funcion de seguridad no da ningun error, procede a añadir los datos en la database
         if security1(commenter, pariente):
+            recibidor.basados += 1
             commenter.basadosHechos.append(pariente)
             session.add(commenter)
             session.add(pariente)
