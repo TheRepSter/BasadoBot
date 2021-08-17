@@ -2,10 +2,7 @@ from basadobot.models import ParienteBasado, session
 from sqlalchemy.exc import IntegrityError
 
 def security1(commenter, pariente, recibidor):
-    for i in pariente.basadoPorUsuarios:
-        if i.id == commenter.id:
-            return False 
-    return True
+    return pariente in commenter.basadosHechos
 
 def security2(basado):
     try:

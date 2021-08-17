@@ -78,7 +78,7 @@ class bot:
             commenter = User(username = str(basado.author))
         
         #Si la funcion de seguridad no da ningun error, procede a añadir los datos en la database
-        if security1(commenter, pariente, recibidor):
+        if security1(commenter, pariente):
             commenter.basadosHechos.append(pariente)
             session.add(commenter)
             session.add(pariente)
