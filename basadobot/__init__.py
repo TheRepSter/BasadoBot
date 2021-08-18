@@ -4,9 +4,6 @@ from basadobot.data import reciber
 from basadobot.cunado import generador_frase
 import praw
 from time import sleep, time
-import warnings
-
-warnings.filterwarnings('ignore')
 
 #Mensajes copiados de u/basedcount_bot momentaneamente.
 messages = {
@@ -93,12 +90,15 @@ class bot:
     #Funcion para dar las pildoras (en caso que tenga) cuando hay un basado
     def dar_pildoras(self, recibidor, basado, pillWord): 
         #Saca el nombre de la pill como tal
-        nombrePill = basado.body.lower().split(pillWord)[0].split(" ")[-1]
+        nombrePill = basado.body.lower().split(pillWord)[0].split(" ")[-1].strip()
         
         #Añade la pill a la db y se la da al que la recibe
-        pill = Pildora(name=nombrePill, recibidor=recibidor)
-        session.add(pill)
-        return pill
+        if nombrePill:
+            pill = Pildora(name=nombrePill, recibidor=recibidor)
+            session.add(pill)
+            return pill
+        else:
+            return None
 
     #Envia el mensaje anunciando el basado
     def mensaje_basado(self, recib):
@@ -149,7 +149,7 @@ class bot:
                 continue
             
             pildora = ""
-            for palabra in ["pileado", "pilleado", "pildoreado", "pileada", "pilleada", "pildoreada", "pilled"]:
+            for palabra in ["pileado", "pilleado", "pildoreado", "pastillado", "pileada", "pilleada", "pildoreada", "pastillada", "pilled"]:
                 if palabra in comment.body.lower()[len(palabraEncontrada):]:
                     pildora = palabra
                     break
