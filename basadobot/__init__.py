@@ -233,7 +233,10 @@ class bot:
 
             elif "tirarpildora" == comando.body[1:13]:
                 autor = session.query(User).filter(User.username == str(comando.author)).first()
-                toBuscar = comando.body.split(" ")[1]
+                try:
+                    toBuscar = comando.body.split(" ")[1]
+                except IndexError:
+                    toBuscar = ""
                 pills = session.query(Pildora).filter(Pildora.name == toBuscar).all()
                 if pills:
                     for pill in pills:
