@@ -1,6 +1,5 @@
-from sqlalchemy import Column, Integer, String, create_engine, Boolean, Table, ForeignKey
-from sqlalchemy.orm import backref, relationship, sessionmaker
-from sqlalchemy.engine import create_engine
+from sqlalchemy import Column, Integer, String, create_engine, Boolean, ForeignKey
+from sqlalchemy.orm import relationship, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
 

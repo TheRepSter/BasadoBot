@@ -180,7 +180,7 @@ class bot:
         frase = False
 
         for comment in subreddit_inspection.comments(limit=100):
-            if abs(comment.score) >= 10 and time() - comment.created_utc <= 600 and not session.query(OtherComment).filter(OtherComment.commentId == comment.id).first():
+            if abs(comment.score) >= 5 and time() - comment.created_utc <= 900 and not session.query(OtherComment).filter(OtherComment.commentId == comment.id).first():
                 frase = True
                 session.add(OtherComment(commentId=comment.id))
                 comment.reply(generador_frase(str(comment.author)) + "\n\n¿Alguna duda? ¡Haz /info o háblame por MD a mi o a mi creador!")
@@ -286,8 +286,8 @@ class bot:
 
             otros_comandos = self.mirar_otros_comandos()
             self.responder_otros_comandos(otros_comandos)
-            #frase = self.frase_de_cunado()
-            if len(otros_comandos):# or frase:
+            frase = self.frase_de_cunado()
+            if len(otros_comandos) or frase:
                 self.commit_changes(False)
 
             sleep(10)

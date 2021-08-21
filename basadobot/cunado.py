@@ -481,7 +481,8 @@ todasLasFrases = [
     "El poder reside en las matemáticas",
     "A trabajar en una obra os ponía yo...",
     "No he entenido ni una palabra de toda esta jerga",
-    "Con {insertarnombre} no había tantas chorradas"
+    "Con {insertarnombre} no había tantas chorradas",
+    "Busco novia, interesadas al DM."
 ]
 
 def generador_frase(nombreuser):
