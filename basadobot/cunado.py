@@ -493,7 +493,8 @@ todasLasFrases = [
     "{nombreuser} tiene un cuerno de mamut",
     "[Amogus hack, always impostor, link mega 100por100 real no fake with antivirus]({linkrickroll})",
     "[Free robux here! Link mega]({linkrickroll})",
-    "¡Estoy calor! Mira mis fotos privadas [aqui]({linkrickroll})"
+    "¡Estoy calor! Mira mis fotos privadas [aqui]({linkrickroll})",
+    "-¡Hola, {nombreuser}!\n\n+¡Hola, {insertarnombre}!\n\n-¿Vió usted a mi abuela?\n\n+A su abuela yo la ví.\n\n-Tengo fimosis"
 ]
 
 def generador_frase(nombreuser):
