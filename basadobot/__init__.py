@@ -189,6 +189,7 @@ class bot:
                 frase = True
                 session.add(OtherComment(commentId=comment.id))
                 comment.reply(generador_frase(str(comment.author)) + "\n\n¿Alguna duda? ¡Haz /info o háblame por MD a mi o a mi creador!")
+                print("New frase cunada!")
                 sleep(2.5)
 
         return frase
