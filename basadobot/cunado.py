@@ -385,7 +385,8 @@ nombres = [
     "Alejandro Sanz",
     "Melendi",
     "Bambi",
-    "Nelson Mandela"
+    "Nelson Mandela",
+    "Tu puta madre"
 ]
 
 todasLasFrases = [
@@ -485,7 +486,14 @@ todasLasFrases = [
     "Busco novia, interesadas al DM",
     "Joder {pais} es mucho mas grande de lo que me imaginaba",
     "Con mi poderoso Mouse Gaming soy poderesisimo en el Ajedrez",
-    "Sabía que no me podía fiar de {insertarnombre}."
+    "Sabía que no me podía fiar de {insertarnombre}",
+    "Maduritas calientes en tu zona {nombreuser}",
+    "Vendo opel corsa",
+    "Friendship ended with {nombreuser}, now {insertarnombre} is my best friend",
+    "{nombreuser} tiene un cuerno de mamut",
+    "[Amogus hack, always impostor, link mega 100por100 real no fake with antivirus]({linkrickroll})",
+    "[Free robux here! Link mega]({linkrickroll})",
+    "¡Estoy calor! Mira mis fotos privadas [aqui]({linkrickroll})"
 ]
 
 def generador_frase(nombreuser):
@@ -498,6 +506,8 @@ def generador_frase(nombreuser):
     
     frase = frase.replace("{nombreuser}", nombreuser)
     frase = frase.replace("{pais}", choice(paises))
+    frase = frase.replace("{linkrickroll}", "https://youtu.be/dQw4w9WgXcQ")
+
     if frase[-1] not in [".", "?", "!"]:
         if frase[-1] == ",":
             frase[-1] == "."
