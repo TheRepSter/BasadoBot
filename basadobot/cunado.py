@@ -272,7 +272,7 @@ nombres = [
     "José Antonio, Primo de Albert Rivera,",
     "Juan Carlos I",
     "Felipe VI",
-    "Felpudo VI"
+    "Felpudo VI",
     "Felipe V",
     "Carlos II",
     "Rafael Alberti",

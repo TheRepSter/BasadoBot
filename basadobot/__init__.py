@@ -5,6 +5,11 @@ from basadobot.cunado import generador_frase
 import praw
 from time import sleep, time
 
+#
+variantesDePilldora = ["pileado", "pilleado", "pildoreado", "pastillado",
+                    "pileada", "pilleada", "pildoreada", "pastillada",
+                    "pilled", "pastillat", "pilatuta"]
+
 #Mensajes copiados de u/basedcount_bot momentaneamente.
 messages = {
             1:"Casa de cartas",
@@ -140,7 +145,7 @@ class bot:
         #en caso contrario pasa de comentario, si encuentra la palabra tambien mira si tiene pildora
         for comment in subreddit_inspection.comments(limit=100):
             palabraEncontrada = ""
-            for palabra in ["basado", "basada", "based"]:
+            for palabra in ["basado", "basada", "based", "basat", "oinarritua", "baseado"]:
                 if palabra in comment.body.lower()[:len(palabra)]:
                     palabraEncontrada = palabra
                     break
@@ -149,7 +154,7 @@ class bot:
                 continue
             
             pildora = ""
-            for palabra in ["pileado", "pilleado", "pildoreado", "pastillado", "pileada", "pilleada", "pildoreada", "pastillada", "pilled"]:
+            for palabra in variantesDePilldora:
                 if palabra in comment.body.lower()[len(palabraEncontrada):]:
                     pildora = palabra
                     break
