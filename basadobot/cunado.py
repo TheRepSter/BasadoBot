@@ -484,7 +484,8 @@ todasLasFrases = [
     "Con {insertarnombre} no había tantas chorradas",
     "Busco novia, interesadas al DM",
     "Joder {pais} es mucho mas grande de lo que me imaginaba",
-    "Con mi poderoso Mouse Gaming soy poderesisimo en el Ajedrez"
+    "Con mi poderoso Mouse Gaming soy poderesisimo en el Ajedrez",
+    "Sabía que no me podía fiar de {insertarnombre}"
 ]
 
 def generador_frase(nombreuser):
