@@ -482,7 +482,9 @@ todasLasFrases = [
     "A trabajar en una obra os ponía yo...",
     "No he entenido ni una palabra de toda esta jerga",
     "Con {insertarnombre} no había tantas chorradas",
-    "Busco novia, interesadas al DM."
+    "Busco novia, interesadas al DM",
+    "Joder {pais} es mucho mas grande de lo que me imaginaba",
+    "Con mi poderoso Mouse Gaming soy poderesisimo en el Ajedrez"
 ]
 
 def generador_frase(nombreuser):
