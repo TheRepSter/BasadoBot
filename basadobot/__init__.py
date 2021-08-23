@@ -8,7 +8,7 @@ from time import sleep, time
 #
 variantesDePilldora = ["pileado", "pilleado", "pildoreado", "pastillado",
                     "pileada", "pilleada", "pildoreada", "pastillada",
-                    "pilled", "pastillat", "pilatuta"]
+                    "pilled", "enpastillat", "pilatuta"]
 
 #Mensajes copiados de u/basedcount_bot momentaneamente.
 messages = {
