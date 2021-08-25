@@ -185,7 +185,7 @@ class bot:
         frase = False
 
         for comment in subreddit_inspection.comments(limit=100):
-            if abs(comment.score) >= 13 and not session.query(OtherComment).filter(OtherComment.commentId == comment.id).first():
+            if abs(comment.score) >= 13 and str(comment.author).lower() != "basadobot" and not session.query(OtherComment).filter(OtherComment.commentId == comment.id).first():
                 frase = True
                 session.add(OtherComment(commentId=comment.id))
                 comment.reply(generador_frase(str(comment.author)) + "\n\n¿Alguna duda? ¡Haz /info o háblame por MD a mi o a mi creador!")

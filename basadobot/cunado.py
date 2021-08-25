@@ -386,7 +386,8 @@ nombres = [
     "Melendi",
     "Bambi",
     "Nelson Mandela",
-    "Tu puta madre"
+    "Tu puta madre",
+    "Rajoy"
 ]
 
 todasLasFrases = [
@@ -494,7 +495,36 @@ todasLasFrases = [
     "[Amogus hack, always impostor, link mega 100por100 real no fake with antivirus]({linkrickroll})",
     "[Free robux here! Link mega]({linkrickroll})",
     "¡Estoy calor! Mira mis fotos privadas [aqui]({linkrickroll})",
-    "-¡Hola, {nombreuser}!\n\n+¡Hola, {insertarnombre}!\n\n-¿Vió usted a mi abuela?\n\n+A su abuela yo la ví.\n\n-Tengo fimosis"
+    "-¡Hola, {nombreuser}!\n\n+¡Hola, {insertarnombre}!\n\n-¿Vió usted a mi abuela?\n\n+A su abuela yo la ví.\n\n-Tengo fimosis",
+    "Ojo que con ese comentario invocas a Uncle_Sabino",
+    "Me han dicho que eres un boinudo espanyolista, ten cuidado",
+    "Los catalanes hacen cosas",
+    "Somos basados y tenemos bots en nuestro interior",
+    "Tenemos que hacer bots, que hagan más bots. Por que lo que nunca hará un bot es hacer más bots",
+    "BOTifler!",
+    "¿Ustedes piensan antes de basar o basan tras pensar?",
+    "A veces estamos pensando siempre en los basados, y al final los seres humanos somos sobre todo personas",
+    "Cuanto peor mejor para todos y cuanto peor para todos mejor, mejor para mí el suyo, beneficio basado",
+    "Es el esparedditor el que elije al representante y es el representante el que quiere que sean los esparedditors el representante",
+    "Es usted Ruiz, ruin, mezquino y miserable",
+    "Asi_va_Espana es un gran subreddit que hace cosas importantes y tiene esparedditors",
+    "Asi_va_Espana es un gran subreddit y los esparedditors muy esparedditors y mucho esparedditors.",
+    "Esto no es como el agua que cae del cielo, sin que se sepa exactamente por qué.",
+    "Exportar es positivo porque vendes lo que produces.",
+    "Hacemos lo que lo podemos significa lo que exactamente significa hacemos lo que lo podemos.",
+    "Hay un dato que no podemos obviar, que es que el 45 por ciento de los baneados este año en Asi_va_Espana son extranjeros. Eso no quiere decir nada, simplemente que son extranjeros.",
+    "La cerámica de Talavera no es cosa menor, dicho de otra forma: es cosa mayor.",
+    "Las decisiones se toman en el momento de tomarse.",
+    "Lo que nosotros hemos hecho, cosa que no hizo usted, es engañar a la gente.",
+    "Lo único serio es ser serio.",
+    "Ni a Hitler ni a Stalin les han nombrado personas non grata en Asi_va_Espana.",
+    "No he dormido nada. No me pregunten demasiado si hacen el favor.",
+    "Por las carreteras tienen que ir coches y de los aeropuertos tienen que salir aviones.",
+    "Quiero transmitir a los esparedditores un mensaje de esperanza. Sabino es un gran subreddit; Asi_va_Espana, perdón, es un gran subreddit.",
+    "Todo lo que se refiere a mí no es cierto, salvo alguna cosa que se ha publicado.",
+    "Un vaso es un vaso y un plato es un plato.",
+    "Una cosa es ser solidario, y otra es serlo a cambio de nada.",
+    "Vivo en el lío."
 ]
 
 def generador_frase(nombreuser):
