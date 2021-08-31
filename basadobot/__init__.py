@@ -2,8 +2,9 @@ from basadobot.models import User, ParienteBasado, Pildora, OtherComment, sessio
 from basadobot.security import security1, security2
 from basadobot.data import reciber
 from basadobot.cunado import generador_frase
+from basadobot.utils import printx
 import praw
-from time import sleep, time
+from time import sleep
 
 #
 variantesDePilldora = ["pileado", "pilleado", "pildoreado", "pastillado",
@@ -89,7 +90,7 @@ class bot:
 
     #Self explainatory
     def commit_changes(self, changes=True):
-        print("Commited changes!") if changes else print("Commited othercommands!")
+        printx("Commited changes!") if changes else printx("Commited othercommands!")
         session.commit()
 
     #Funcion para dar las pildoras (en caso que tenga) cuando hay un basado
@@ -189,7 +190,7 @@ class bot:
                 frase = True
                 session.add(OtherComment(commentId=comment.id))
                 comment.reply(generador_frase(str(comment.author)) + "\n\n¿Alguna duda? ¡Haz /info o háblame por MD a mi o a mi creador!")
-                print("New frase cunada!")
+                printx("New frase cunada!")
                 sleep(2.5)
 
         return frase
