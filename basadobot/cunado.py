@@ -387,7 +387,28 @@ nombres = [
     "Bambi",
     "Nelson Mandela",
     "Tu puta madre",
-    "Rajoy"
+    "Rajoy",
+    "Santiago Armesilla",
+    "Juan Ramon Rallo",
+    "Un Tío Blanco Hetero",
+    "Roberto Vaquero",
+    "Iñigo Errejón",
+    "Fraga",
+    "Jesús Gil",
+    "Artur Mas",
+    "Feijóo",
+    "Putin",
+    "Willyrex",
+    "Mister Jagger",
+    "Fernanfloo",
+    "Pewdiepie",
+    "Cao de Benós",
+    "David Broncano",
+    "Andreu Buenafuente",
+    "El gran Wyoming",
+    "John Cena",
+    "Ortega Smith",
+    "Pere Aragonés"
 ]
 
 todasLasFrases = [
@@ -524,7 +545,14 @@ todasLasFrases = [
     "Todo lo que se refiere a mí no es cierto, salvo alguna cosa que se ha publicado.",
     "Un vaso es un vaso y un plato es un plato.",
     "Una cosa es ser solidario, y otra es serlo a cambio de nada.",
-    "Vivo en el lío."
+    "Vivo en el lío.",
+    "Déjame que beba tranquilamente",
+    "El vino es un patrimonio de orgullo para todos los españoles.",
+    "Os hace falta una mili...",
+    "¿Y quién te ha dicho que quiero que conduzcas por mí?",
+    "A mí no me gusta que me digan no puede ir usted a más de tanta velocidad, no puede usted comer hamburguesas de tanto, debe usted evitar esto y además a usted le prohíbo beber vino",
+    "{insertarnombre} no reconoce la existencia de la República de China",
+    "{insertarnombre} extraña a Yugoslavia"
 ]
 
 def generador_frase(nombreuser):
