@@ -190,7 +190,7 @@ class bot:
         return comentarios
 
     def frase_de_cunado(self):
-        subreddit_inspection = self.reddit.subreddit("BasadoBot")
+        subreddit_inspection = self.reddit.subreddit("Asi_va_Espana")
 
         for comment in subreddit_inspection.comments(limit=100):
             if abs(comment.score) >= 13 and not session.query(OtherComment).filter(OtherComment.commentId == comment.id).first():

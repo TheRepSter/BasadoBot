@@ -7,7 +7,7 @@ if __name__ == '__main__':
     BasadoBot = bot(
         client_id = "1J2OALZQOi91tg",
         client_secret = client_secret,
-        user_agent = "<BasadoBot:v1.4.11>",
+        user_agent = "<BasadoBot:v2.0.1>",
         username = "BasadoBot",
         password = password
     )
@@ -15,7 +15,7 @@ if __name__ == '__main__':
     while True:
         try:
             BasadoBot.run()
-            
+
         except RequestException:
             print("RequestException")
             sleep(10)
