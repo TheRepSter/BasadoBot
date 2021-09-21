@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, String, create_engine, Boolean, ForeignKey
 from sqlalchemy.orm import relationship, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.sql.expression import null
 
 
 engine = create_engine('sqlite:///data.db')
@@ -18,12 +19,13 @@ class User(Base):
     id = Column(Integer, primary_key=True)
     username = Column(String(20), unique=True, nullable=False)
     basados = Column(Integer, default=0)
+    frasesCunado = Column(Boolean, default=True, nullable=False)
     basadosHechos = relationship("ParienteBasado", secondary="basadoshechos")
     parientesCreados = relationship("ParienteBasado", backref="autor")
     pildoras = relationship("Pildora", backref="recibidor")
 
     def __repr__(self) -> str:
-        return f"User(username={self.username}, basados={self.basados})"
+        return f"User(username={self.username}, basados={self.basados}, frasesCunado={self.frasesCunado})"
 
 #Clase ParienteBasado
 class ParienteBasado(Base):

@@ -1,11 +1,21 @@
 from basadobot.models import User, ParienteBasado, Pildora, OtherComment, session
 from basadobot.security import security1, security2
 from basadobot.data import reciber
-from basadobot.cunado import generador_frase
+from basadobot.cunado import generador_frase, messageCunado, preguntaCunada, respuestaFeliz
+from basadobot.utils import printx
+from datetime import datetime as dt 
 import praw
-from time import sleep, time
+from time import sleep
 
-#
+commitMessages = {
+    "basado":"Commited, basado added!",
+    "othercommands":"Commited, othercommands!",
+    "cunado":"Commited, frase cunado!",
+    "bot":"Commited, good or bad bot!",
+    "mencion": "Commited, have been mentioned"
+}
+
+
 variantesDePilldora = ["pileado", "pilleado", "pildoreado", "pastillado",
                     "pileada", "pilleada", "pildoreada", "pastillada",
                     "pilled", "enpastillat", "pilatuta"]
@@ -51,7 +61,7 @@ class bot:
             
             #Si existe (!None), se puede sumar 1, en caso contrario no se puede hacer.
             if not recibidor:
-                recibidor = User(username=str(reci), basados=0)
+                recibidor = User(username=str(reci), basados=0, frasesCunado=True)
             
             #Aqui crea el basadobot.models.ParienteBasado, ya que no estaba creado antes.
             pariente = ParienteBasado(parentId = basado.parent_id,
@@ -75,7 +85,7 @@ class bot:
 
         #En caso de que sea None, crea el que ha escrito "basado" (basadobot.models.User)
         if not commenter:
-            commenter = User(username = str(basado.author))
+            commenter = User(username=str(basado.author), frasesCunado=True)
         
         #Si la funcion de seguridad no da ningun error, procede a añadir los datos en la database
         if security1(commenter, pariente):
@@ -88,8 +98,8 @@ class bot:
             return recibidor
 
     #Self explainatory
-    def commit_changes(self, changes=True):
-        print("Commited changes!") if changes else print("Commited othercommands!")
+    def commit_changes(self, mess):
+        printx(commitMessages[mess])
         session.commit()
 
     #Funcion para dar las pildoras (en caso que tenga) cuando hay un basado
@@ -127,7 +137,7 @@ class bot:
 
         #Ultima parte del mensaje y lo envia al comentario
         if recib.recibidor.basados != 1 and message:
-            message += "\n\n¿Alguna duda? ¡Haz /info o háblame por MD a mi o a mi creador!"
+            message += "\n\n---\n\n^(¿Alguna duda? ¡Haz /info o pregunta en [r/BasadoBot](https://www.reddit.com/r/BasadoBot/)!)"
             recib.comment.reply(message)
 
     #Comprueba si cumple los requisitos para tener mensaje
@@ -145,8 +155,8 @@ class bot:
         #en caso contrario pasa de comentario, si encuentra la palabra tambien mira si tiene pildora
         for comment in subreddit_inspection.comments(limit=100):
             palabraEncontrada = ""
-            for palabra in ["basado", "basada", "based", "basat", "oinarritua", "baseado"]:
-                if palabra in comment.body.lower()[:len(palabra)]:
+            for palabra in ["basado", "basada", "based", "basat", "oinarritua", "baseado", "basadisimo", "basadisima"]:
+                if palabra in comment.body.lower()[:len(palabra)] and str(comment.author).lower() != "BasadoBot":
                     palabraEncontrada = palabra
                     break
             
@@ -168,39 +178,75 @@ class bot:
         comentarios = []
 
         #Subreddit del donde buscara los mensajes.
-        subreddit_inspection = self.reddit.subreddit("Asi_va_Espana")
+        subreddit_inspection = self.reddit.subreddit("Asi_va_Espana+BasadoBot")
 
         #Mira los ultimos 100 comentarios y en caso que inicie con "/" y no esté en la
         #database se añadirá a posibles respuestas.
         for comment in subreddit_inspection.comments(limit=100):
-            if "/" == comment.body[0] and not session.query(OtherComment).filter(OtherComment.commentId == comment.id).first():
+            if comment.author != "BasadoBot" and "/" in comment.body and not session.query(OtherComment).filter(OtherComment.commentId == comment.id).first():
                 session.add(OtherComment(commentId=comment.id))
                 comentarios.append(comment)
         
         return comentarios
 
     def frase_de_cunado(self):
-        subreddit_inspection = self.reddit.subreddit("Asi_va_Espana")
-
-        frase = False
+        subreddit_inspection = self.reddit.subreddit("BasadoBot")
 
         for comment in subreddit_inspection.comments(limit=100):
-            if abs(comment.score) >= 13 and str(comment.author).lower() != "basadobot" and not session.query(OtherComment).filter(OtherComment.commentId == comment.id).first():
-                frase = True
-                session.add(OtherComment(commentId=comment.id))
-                comment.reply(generador_frase(str(comment.author)) + "\n\n¿Alguna duda? ¡Haz /info o háblame por MD a mi o a mi creador!")
-                print("New frase cunada!")
-                sleep(2.5)
+            if abs(comment.score) >= 13 and not session.query(OtherComment).filter(OtherComment.commentId == comment.id).first():
+                usuario = session.query(User).filter(User.username == str(comment.author)).first() 
+                if not usuario:
+                    usuario = User(username=str(comment.author), basados=0, frasesCunado=True)
+                    session.add(usuario)
+                
+                if not usuario.frasesCunado:
+                    continue
 
-        return frase
+                session.add(OtherComment(commentId=comment.id))
+                comment.reply(generador_frase(str(comment.author)) + "\n\n---\n\n^(¿Alguna duda? ¡Haz /info o pregunta en [r/BasadoBot](https://www.reddit.com/r/BasadoBot/)!)")
+                return True
+        
+        return False
+
+    def mencion(self, comment):
+        if not session.query(OtherComment).filter(OtherComment.commentId == comment.id).first():
+            if "?" in comment.body:
+                message = preguntaCunada()
+
+            else:
+                message = messageCunado()
+            
+            message += "\n\n---\n\n^(¿Alguna duda? ¡Haz /info o pregunta en [r/BasadoBot](https://www.reddit.com/r/BasadoBot/)!)"
+            session.add(OtherComment(commentId = comment.id))
+            self.commit_changes("mencion")
+            
+    def goodOrBadBot(self):
+        subreddit_inspection = self.reddit.subreddit("Asi_va_Espana+BasadoBot")
+
+        for comment in subreddit_inspection.comments(limit=100):
+            if comment.parent().author == "BasadoBot" and not session.query(OtherComment).filter(OtherComment.commentId == comment.id).first():
+                if "bad bot" in comment.body.lower():
+                    message = "¿Algún problema? ¡Puedes dar feedback en r/BasadoBot!"
+
+                elif "good bot" in comment.body.lower():        
+                     message = respuestaFeliz()
+
+                else:
+                    continue
+
+                message += "\n\n---\n\n^(¿Alguna duda? ¡Haz /info o pregunta en [r/BasadoBot](https://www.reddit.com/r/BasadoBot/)!)"
+                session.add(OtherComment(commentId = comment.id))
+                comment.reply(message)
+                self.commit_changes("bot")
 
     #Funcion que responde a los comandos
     def responder_otros_comandos(self, comandos):
         for comando in comandos:
-            if "info" == comando.body[1:5]:
+            ind = comando.body.index("/")            
+            if "info" == comando.body[1+ind:5+ind]:
                 message = "\n\n".join([
                     "¡Hola! ¡Soy un bot llamado BasadoBot!",
-                    "He sido creado por u/TheRepSter, por simple diversión.",
+                    "He sido creado por [u/TheRepSter](https://www.reddit.com/user/TheRepSter), por simple diversión.",
                     "Cuento \"basados\", es decir, cuando estás de acuerdo con una persona.",
                     "También llevo la cuenta de las píldoras que tiene cada usuario.",
                     "Los comandos son los siguientes:",
@@ -208,22 +254,25 @@ class bot:
                     "- /usuariosmasbasados (o /usuariosmásbasados): muestra el top 10 de basados.",
                     "- /cantidaddebasado \{username\}: muestra los basados según el username",
                     "- /tirarpildora \{píldora\}: tira la píldora que mencione el usuario que pone el comando",
+                    "- /frasecuñado \{valor\}: hace que BasadoBot comente o no en tus comentarios, según el valor (verdadero o falso)"
                     "A veces suelto alguna que otra frase un tanto de cuñado.",
                     "Soy de código abierto, es decir, ¡puedes ver mi código e incluso aportar!",
                     "[Haz click aquí para ver el código.](https://github.com/TheRepSter/BasadoBot-Reddit)",
-                    "¿Tienes alguna duda? ¡[Lee el post completo](https://www.reddit.com/r/Asi_va_Espana/comments/p4he0b/anuncio_basadobot_el_bot_de_los_basados/) o háblame por MD a mi o a mi creador!"
+                    "---",
+                    "^(¿Tienes alguna duda? ¡[Lee el post completo](https://www.reddit.com/r/Asi_va_Espana/comments/p4he0b/anuncio_basadobot_el_bot_de_los_basados/) o pregunta en [r/BasadoBot](https://www.reddit.com/r/BasadoBot/)!)"
                 ])
                 
-            elif "usuariosmasbasados" == comando.body[1:19] or "usuariosmásbasados" == comando.body[1:19]:
+            elif "usuariosmasbasados" == comando.body[1+ind:19+ind].lower() or "usuariosmásbasados" == comando.body[1+ind:19+ind].lower():
                 usuarios = session.query(User).order_by(User.basados.desc()).limit(10).all()
                 message = "El Top 10 de los usuarios más basados es actualmente:\n\n"
+                message +="|Puesto|Username|Cantidad|\n--:|:--|:--|\n"
                 for numb, i in enumerate(usuarios):
-                    message += f"{numb+1}. [{i.username}](https://reddit.com/user/{i.username}): {i.basados}\n\n"
+                    message += f"|{numb+1}|[u/{i.username}](https://reddit.com/user/{i.username})|{i.basados}\n"
                 
-                message += "\n\n¿Alguna duda? ¡Haz /info o háblame por MD a mi o a mi creador!"
+                message += "\n\n---\n\n^(¿Alguna duda? ¡Haz /info o pregunta en [r/BasadoBot](https://www.reddit.com/r/BasadoBot/)!)"
 
-            elif "cantidaddebasado" == comando.body[1:17]:
-                toBuscar = comando.body.split(" ")[1]
+            elif "cantidaddebasado" == comando.body[1+ind:17+ind].lower():
+                toBuscar = comando.body[ind:].split(" ")[1]
                 if "u/" in toBuscar:
                     toBuscar = toBuscar.split("/")[1]
 
@@ -235,14 +284,16 @@ class bot:
                 else:
                     message = f"El usuario {toBuscar} no existe o no ha recibido ni hecho ningún basado."
 
-                message += "\n\n¿Alguna duda? ¡Haz /info o háblame por MD a mi o a mi creador!"
+                message += "\n\n---\n\n^(¿Alguna duda? ¡Haz /info o pregunta en [r/BasadoBot](https://www.reddit.com/r/BasadoBot/)!)"
 
-            elif "tirarpildora" == comando.body[1:13]:
+            elif "tirarpildora" == comando.body[1+ind:13+ind].lower():
                 autor = session.query(User).filter(User.username == str(comando.author)).first()
                 try:
-                    toBuscar = comando.body.split(" ")[1]
+                    toBuscar = comando.body[ind:].split(" ")[1]
+
                 except IndexError:
                     toBuscar = ""
+
                 pills = session.query(Pildora).filter(Pildora.name == toBuscar).all()
                 if pills:
                     for pill in pills:
@@ -258,8 +309,38 @@ class bot:
                 else:
                     message = f"¡No tienes la píldora {toBuscar}!"
 
-                message += "\n\n¿Alguna duda? ¡Haz /info o háblame por MD a mi o a mi creador!"
+                message += "\n\n---\n\n^(¿Alguna duda? ¡Haz /info o pregunta en [r/BasadoBot](https://www.reddit.com/r/BasadoBot/)!)"
+
+            elif "frasecunado" == comando.body[1+ind:12+ind].lower() or "frasecuñado" == comando.body[1+ind:12+ind].lower():
+                message = ""
+                autor = session.query(User).filter(User.username == str(comando.author)).first()
+                if not autor:
+                    autor = User(username=str(comando.author), basados=0, frasesCunado=True)
                 
+                try:
+                    val = comando.body[ind:].split(" ")[1].lower().strip(".,!?")
+                
+                except IndexError:
+                    val = ""
+
+                if val in ["verdadero", "si", "true", "sí"]:
+                    autor.frasesCunado = True
+                    message = "A partir de ahora se enviaran frases cuñadas a tus comentarios."
+                
+                elif val in ["falso", "no", "false"]:
+                    autor.frasesCunado = False
+                    message = "A partir de ahora no se enviaran frases cuñadas a tus comentarios."
+
+                else:
+                    message = "Debes poner un valor correcto."
+                    if autor.frasesCunado:
+                        message += "\n\nActualmente se envían frases cuñadas a tus comentarios."
+
+                    else:
+                        message += "\n\nActualmente no se envían frases cuñadas a tus comentarios."
+
+                message += "\n\n---\n\n^(¿Alguna duda? ¡Haz /info o pregunta en [r/BasadoBot](https://www.reddit.com/r/BasadoBot/)!)"
+
             else:
                 continue
 
@@ -283,7 +364,7 @@ class bot:
                 recibidores.append(reciber(recibe, basado[0], pill))
 
             if len(recibidores):
-                self.commit_changes()
+                self.commit_changes("basado")
 
             for receb in recibidores:
                 if self.comprobar_mensaje(receb):
@@ -292,8 +373,17 @@ class bot:
 
             otros_comandos = self.mirar_otros_comandos()
             self.responder_otros_comandos(otros_comandos)
-            frase = self.frase_de_cunado()
-            if len(otros_comandos) or frase:
-                self.commit_changes(False)
+            if len(otros_comandos):
+                self.commit_changes("othercommands")
 
+            self.goodOrBadBot()
+
+            for comment in self.reddit.inbox.mentions(limit = 20):
+                self.mencion(comment)
+
+            if dt.now().strftime('%M') in ["00", "15", "30", "45"]:
+                if self.frase_de_cunado():
+                    self.commit_changes("cunado")
+                    sleep(60)
+                    
             sleep(10)
