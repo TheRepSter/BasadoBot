@@ -221,27 +221,24 @@ class bot:
             comment.reply(message)
             self.commit_changes("mencion")
             
-    def goodOrBadBot(self):
-        subreddit_inspection = self.reddit.subreddit("Asi_va_Espana+BasadoBot")
+    def goodOrBadBot(self, comment):
+        if not session.query(OtherComment).filter(OtherComment.commentId == comment.id).first():
+            if "bad bot" in comment.body.lower() or "bot malo" in comment.body.lower():
+                message = "¿Algún problema? ¡Puedes dar feedback en r/BasadoBot!"
 
-        for comment in subreddit_inspection.comments(limit=100):
-            if comment.parent().author == "BasadoBot" and not session.query(OtherComment).filter(OtherComment.commentId == comment.id).first():
-                if "bad bot" in comment.body.lower():
-                    message = "¿Algún problema? ¡Puedes dar feedback en r/BasadoBot!"
+            elif "good bot" in comment.body.lower() or "buen bot" in comment.body.lower():        
+                message = respuestaFeliz()
 
-                elif "good bot" in comment.body.lower():        
-                     message = respuestaFeliz()
-                
-                elif "u/basadobot" in comment.body.lower():
-                    self.mencion(comment)
+            elif "u/basadobot" in comment.body.lower():
+                return self.mencion(comment)
 
-                else:
-                    continue
+            else:
+                return
 
-                message += "\n\n---\n\n^(¿Alguna duda? ¡Haz /info o pregunta en [r/BasadoBot](https://www.reddit.com/r/BasadoBot/)!)"
-                session.add(OtherComment(commentId = comment.id))
-                comment.reply(message)
-                self.commit_changes("bot")
+            message += "\n\n---\n\n^(¿Alguna duda? ¡Haz /info o pregunta en [r/BasadoBot](https://www.reddit.com/r/BasadoBot/)!)"
+            session.add(OtherComment(commentId = comment.id))
+            comment.reply(message)
+            self.commit_changes("bot")
 
     #Funcion que responde a los comandos
     def responder_otros_comandos(self, comandos) -> bool:
@@ -383,16 +380,16 @@ class bot:
                     sleep(2.5)
                     self.mensaje_basado(receb)
 
+            for comment in self.reddit.inbox.comment_replies(limit = 20):
+                self.goodOrBadBot(comment)
+
+            for comment in self.reddit.inbox.mentions(limit = 20):
+                self.mencion(comment)
+
             otros_comandos = self.mirar_otros_comandos()
             comms = self.responder_otros_comandos(otros_comandos)
             if comms:
                 self.commit_changes("othercommands")
-
-            for comment in self.reddit.inbox.comment_replies(limit = 20):
-                self.
-
-            for comment in self.reddit.inbox.mentions(limit = 20):
-                self.mencion(comment)
 
             if dt.now().strftime('%M') in ["00", "15", "30", "45"]:
                 if self.frase_de_cunado():
