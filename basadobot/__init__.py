@@ -231,6 +231,9 @@ class bot:
 
                 elif "good bot" in comment.body.lower():        
                      message = respuestaFeliz()
+                
+                elif "u/basadobot" in comment.body.lower():
+                    self.mencion(comment)
 
                 else:
                     continue
@@ -241,10 +244,12 @@ class bot:
                 self.commit_changes("bot")
 
     #Funcion que responde a los comandos
-    def responder_otros_comandos(self, comandos):
+    def responder_otros_comandos(self, comandos) -> bool:
+        toReturn = False
         for comando in comandos:
             ind = comando.body.index("/")            
             if "info" == comando.body[1+ind:5+ind]:
+                toReturn = True
                 message = "\n\n".join([
                     "¡Hola! ¡Soy un bot llamado BasadoBot!",
                     "He sido creado por [u/TheRepSter](https://www.reddit.com/user/TheRepSter), por simple diversión.",
@@ -264,6 +269,7 @@ class bot:
                 ])
                 
             elif "usuariosmasbasados" == comando.body[1+ind:19+ind].lower() or "usuariosmásbasados" == comando.body[1+ind:19+ind].lower():
+                toReturn = True
                 usuarios = session.query(User).order_by(User.basados.desc()).limit(10).all()
                 message = "El Top 10 de los usuarios más basados es actualmente:\n\n"
                 message +="|Puesto|Username|Cantidad|\n--:|:--|:--|\n"
@@ -273,6 +279,7 @@ class bot:
                 message += "\n\n---\n\n^(¿Alguna duda? ¡Haz /info o pregunta en [r/BasadoBot](https://www.reddit.com/r/BasadoBot/)!)"
 
             elif "cantidaddebasado" == comando.body[1+ind:17+ind].lower():
+                toReturn = True
                 toBuscar = comando.body[ind:].split(" ")[1]
                 if "u/" in toBuscar:
                     toBuscar = toBuscar.split("/")[1]
@@ -288,6 +295,7 @@ class bot:
                 message += "\n\n---\n\n^(¿Alguna duda? ¡Haz /info o pregunta en [r/BasadoBot](https://www.reddit.com/r/BasadoBot/)!)"
 
             elif "tirarpildora" == comando.body[1+ind:13+ind].lower():
+                toReturn = True
                 autor = session.query(User).filter(User.username == str(comando.author)).first()
                 try:
                     toBuscar = comando.body[ind:].split(" ")[1]
@@ -313,6 +321,7 @@ class bot:
                 message += "\n\n---\n\n^(¿Alguna duda? ¡Haz /info o pregunta en [r/BasadoBot](https://www.reddit.com/r/BasadoBot/)!)"
 
             elif "frasecunado" == comando.body[1+ind:12+ind].lower() or "frasecuñado" == comando.body[1+ind:12+ind].lower():
+                toReturn = True
                 message = ""
                 autor = session.query(User).filter(User.username == str(comando.author)).first()
                 if not autor:
@@ -346,6 +355,8 @@ class bot:
                 continue
 
             comando.reply(message)
+        
+        return toReturn
 
     #Funcion principal del bot
     def run(self):
@@ -373,11 +384,12 @@ class bot:
                     self.mensaje_basado(receb)
 
             otros_comandos = self.mirar_otros_comandos()
-            self.responder_otros_comandos(otros_comandos)
-            if len(otros_comandos):
+            comms = self.responder_otros_comandos(otros_comandos)
+            if comms:
                 self.commit_changes("othercommands")
 
-            self.goodOrBadBot()
+            for comment in self.reddit.inbox.comment_replies(limit = 20):
+                self.
 
             for comment in self.reddit.inbox.mentions(limit = 20):
                 self.mencion(comment)
