@@ -218,6 +218,7 @@ class bot:
             
             message += "\n\n---\n\n^(¿Alguna duda? ¡Haz /info o pregunta en [r/BasadoBot](https://www.reddit.com/r/BasadoBot/)!)"
             session.add(OtherComment(commentId = comment.id))
+            comment.reply(message)
             self.commit_changes("mencion")
             
     def goodOrBadBot(self):
