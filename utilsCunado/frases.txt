@@ -10,7 +10,7 @@ Sabes, yo conocí a {insertarnombre} antes de que fuera famoso
 {insertarnombre} es pambisit@
 ¡Suscríbete al onlyfans de {insertarnombre} por ₽9.99 ya mismo!
 {nombreuser} debe pilotar el EVA-01 o rei deberá hacerlo
-Estas en un coma {nombreuser}, despiértate de la matrix
+Estás en un coma {nombreuser}, despiértate de la matrix
 Slava {insertarnombre}
 Si lees esto eres fan de {insertarnombre}
 Si eres pobre es por que quieres, mira a {insertarnombre} que empezó pobre como una rata
@@ -148,3 +148,50 @@ No vas a durar más de 4 minutos en [esta]({link}) pagina web.
 Has conseguido un yoMovil 27, haz click [aqui]({link}) para reclamarlo
 {insertarnombre} se ha comido más bebes que Stalin
 Abueno adiós master
+Dios proveerá
+Rotondas hipotecadas en tu zona
+¿Wa a yu gae?
+Nyasu.
+Nico nico ni
+Cuando lleguemos a Stalingrado nos comemos un helado
+Oh no, {nombreuser}, la mitología vasca ha venido a joderte la vida
+Antes de Asi_va_Espana todo esto era campo
+{nombreuser}, sé fuerte
+Un elefante se balanceaba sobre la cama de {insertarnombre}, como veía que no se caía, fue a buscar a {nombreuser}
+Para desbloquear la respuesta debes calcular el tiempo pasado sabiendo que el coche va a 50km/h y ha recorrido ya 2km
+Dato curioso: El usuario Erkadia junto a la AIP llevan más de un siglo en guerra con los jabalies, aun no se saben los motivos de tal conflicto
+Dato curioso: En realidad u/TheRepSter es un bot creado por mi para poder infiltrarse en la sociedad humana
+Dato curioso: Realmente todos somos boinudos españolistas
+Dato curioso: En realidad el moderador Tercio de Flandes es un verdadero soldado que esta luchando con los protestantes y sé encontró un yoMovil
+Dato curioso: Si pones tu contraseña en los comentarios se cambiarán por asteriscos, aquí la prueba: ********
+Dato curioso: Uncle_Sabino realmente era el Vasco más Vasco en el País Vasco, pero de tan Vasco que era tuvo que irse a un sitio que no fuera el País Vasco
+Dato curioso: Las Filipinas fueron llamadas así por el popular almuerzo industrial "Filipinos"
+Dato curioso: La mayoría de frases que digo son frases que dijeron profesores o familiares de el desarrollador
+Dato curioso: Si pones "Dato curioso:" antes de un comentario cualquiera harás que se lea como si fuera un dato curioso, da igual la gilipollez que digas
+Dato curioso: Antes de Asi_va_Espana todo esto era campo
+Dato curioso: Los tigres son tigres por que no son elefantes
+Dato curioso: Cada hora en Cataluña, un minuto pasa
+Dato curioso: Los vascos sin barba son vascos con barba, pero sin barba
+Dato curioso: La mayoría de esto ha sido programado en clase y a mano
+Dato curioso: El sol va a petar algún día. ¿Cuando? Yoksejajasalu2
+Dato curioso: Los átomos son pequeños
+Dato curioso: Todos somos polvo de estrellas, así que cuando quieras nos echamos un polvo. Es broma, no me la metas por el puerto USB :(
+Dato curioso: Este espacio está disponible por una rotonda hipotecada
+Dato curioso: Este espacio está patrocinado por Curva Indirecta
+Dada curiosa: Aquest bot també parla català
+Santaclaus es la copia barata del olentzero. {evento}
+Dato curioso: en realidad hitler ayudó a Franco durante la guerra para que este le diese una cabeza gigante de piedra de Zamora que gritaba si habia judios. {evento}
+Goya se fue de parranda con sorgins. {evento}
+Satanas? Eso es una mariconada, mejor Etsai. {evento}
+¡Ostia tio tienes el dip! No, drip no... ¡Que tienes al dip delante, corre por tu vida! {evento}
+¿Cambio climatico? Eso debe ser culpa de los nuberus... ¡Malditos sean! {evento}
+Recuerda llevar un diente de ajo en el cuello, no vaya a ser que venga una meiga y tengamos sustos... Además si te entra hambre... {evento}
+¿Santaclaus? Que un señor con obesidad entre por mi chimenea (inexistente) no me gusta, así que prefiero que un tronco me cague los regalos, lo llamamos Tió de Nadal. {evento}
+Un comentario más con ese tonito y viene el Papu y te lleva... {evento}
+Mucho simp de los dragones japoneses esos que son to' guapos pero poco simp del culébre... {evento}
+Veo muchos argumentos en contra de Halloween en España pero pocos se dan cuenta que el Samhain lleva aquí desde antes que los romanos... {evento}
+Ten cuidado con los trasgos, como te quiten algo que necesites a saber donde estará luego. {evento}
+Lo de los volcanes debe ser culpa de Guayota... Siempre queriendo el mal a los demás. {evento}
+Un perro muy lanudo puede ser un tibicena, debes tener cuidado con ellos. {evento}
+Siempre se dice mucho de Loki, pero Sugaar mola mucho más. {evento}
+Chewbacca es solo un basajaun más, change my mind. {evento}

@@ -1,7 +1,7 @@
 from basadobot.models import User, ParienteBasado, Pildora, OtherComment, session
 from basadobot.security import security1, security2
 from basadobot.data import reciber
-from basadobot.cunado import generador_frase, messageCunado, preguntaCunada, respuestaFeliz
+from basadobot.cunado import generador_frase, messageCunado, preguntaCunada, respuestaFeliz, respuesta_basadobot_a_basadobot
 from basadobot.utils import printx
 from datetime import datetime as dt 
 import praw
@@ -192,8 +192,13 @@ class bot:
     def frase_de_cunado(self):
         subreddit_inspection = self.reddit.subreddit("Asi_va_Espana")
 
-        for comment in subreddit_inspection.comments(limit=100):
-            if abs(comment.score) >= 13 and not session.query(OtherComment).filter(OtherComment.commentId == comment.id).first():
+        for comment in subreddit_inspection.comments(limit=200):
+            if str(comment.author) == "BasadoBot" and comment.score >= 13 and not session.query(OtherComment).filter(OtherComment.commentId == comment.id).first():
+                session.add(OtherComment(commentId=comment.id))
+                comment.reply(respuesta_basadobot_a_basadobot() + "\n\n---\n\n^(¿Alguna duda? ¡Haz /info o pregunta en [r/BasadoBot](https://www.reddit.com/r/BasadoBot/)!)")
+                return True
+
+            if "lounge" not in comment.submission.title.lower() and abs(comment.score) >= 13 and not session.query(OtherComment).filter(OtherComment.commentId == comment.id).first():
                 usuario = session.query(User).filter(User.username == str(comment.author)).first() 
                 if not usuario:
                     usuario = User(username=str(comment.author), basados=0, frasesCunado=True)
@@ -257,7 +262,7 @@ class bot:
                     "- /usuariosmasbasados (o /usuariosmásbasados): muestra el top 10 de basados.",
                     "- /cantidaddebasado \{username\}: muestra los basados según el username",
                     "- /tirarpildora \{píldora\}: tira la píldora que mencione el usuario que pone el comando",
-                    "- /frasecuñado \{valor\}: hace que BasadoBot comente o no en tus comentarios, según el valor (verdadero o falso)"
+                    "- /frasecuñado \{valor\}: hace que BasadoBot comente o no en tus comentarios, según el valor (verdadero o falso)",
                     "A veces suelto alguna que otra frase un tanto de cuñado.",
                     "Soy de código abierto, es decir, ¡puedes ver mi código e incluso aportar!",
                     "[Haz click aquí para ver el código.](https://github.com/TheRepSter/BasadoBot-Reddit)",
@@ -277,7 +282,7 @@ class bot:
 
             elif "cantidaddebasado" == comando.body[1+ind:17+ind].lower():
                 toReturn = True
-                toBuscar = comando.body[ind:].split(" ")[1]
+                toBuscar = comando.body[ind:].split(" ")[1].strip("\n.,!?")
                 if "u/" in toBuscar:
                     toBuscar = toBuscar.split("/")[1]
 
@@ -325,7 +330,7 @@ class bot:
                     autor = User(username=str(comando.author), basados=0, frasesCunado=True)
                 
                 try:
-                    val = comando.body[ind:].split(" ")[1].lower().strip(".,!?")
+                    val = comando.body[ind:].split(" ")[1].lower().strip("\n.,!?")
                 
                 except IndexError:
                     val = ""
