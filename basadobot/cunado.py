@@ -30,7 +30,9 @@ def generador_frase(nombreuser):
     frase = frase.replace("{nombreuser}", nombreuser)
     frase = frase.replace("{pais}", choice(paises))
     frase = frase.replace("{link}", choice(links))
-    frase = frase.replace("{evento}", fraseEvento)
+    frase = frase.replace("{evento}", "")
+    frase = frase.replace("{br}", "\n\n")
+    frase = frase.strip()
 
     if frase[-1] not in [".", "?", "!"]:
         if frase[-1] == ",":

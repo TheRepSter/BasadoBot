@@ -9,7 +9,7 @@ Sabes, yo conocí a {insertarnombre} antes de que fuera famoso
 {insertarnombre} cree en la república independiente de Murcia
 {insertarnombre} es pambisit@
 ¡Suscríbete al onlyfans de {insertarnombre} por ₽9.99 ya mismo!
-{nombreuser} debe pilotar el EVA-01 o rei deberá hacerlo
+{nombreuser} debe pilotar el EVA-01 o Rei deberá hacerlo
 Estás en un coma {nombreuser}, despiértate de la matrix
 Slava {insertarnombre}
 Si lees esto eres fan de {insertarnombre}
@@ -179,19 +179,75 @@ Dato curioso: Todos somos polvo de estrellas, así que cuando quieras nos echamo
 Dato curioso: Este espacio está disponible por una rotonda hipotecada
 Dato curioso: Este espacio está patrocinado por Curva Indirecta
 Dada curiosa: Aquest bot també parla català
-Santaclaus es la copia barata del olentzero. {evento}
-Dato curioso: en realidad hitler ayudó a Franco durante la guerra para que este le diese una cabeza gigante de piedra de Zamora que gritaba si habia judios. {evento}
-Goya se fue de parranda con sorgins. {evento}
-Satanas? Eso es una mariconada, mejor Etsai. {evento}
-¡Ostia tio tienes el dip! No, drip no... ¡Que tienes al dip delante, corre por tu vida! {evento}
-¿Cambio climatico? Eso debe ser culpa de los nuberus... ¡Malditos sean! {evento}
-Recuerda llevar un diente de ajo en el cuello, no vaya a ser que venga una meiga y tengamos sustos... Además si te entra hambre... {evento}
-¿Santaclaus? Que un señor con obesidad entre por mi chimenea (inexistente) no me gusta, así que prefiero que un tronco me cague los regalos, lo llamamos Tió de Nadal. {evento}
-Un comentario más con ese tonito y viene el Papu y te lleva... {evento}
-Mucho simp de los dragones japoneses esos que son to' guapos pero poco simp del culébre... {evento}
-Veo muchos argumentos en contra de Halloween en España pero pocos se dan cuenta que el Samhain lleva aquí desde antes que los romanos... {evento}
-Ten cuidado con los trasgos, como te quiten algo que necesites a saber donde estará luego. {evento}
-Lo de los volcanes debe ser culpa de Guayota... Siempre queriendo el mal a los demás. {evento}
-Un perro muy lanudo puede ser un tibicena, debes tener cuidado con ellos. {evento}
-Siempre se dice mucho de Loki, pero Sugaar mola mucho más. {evento}
-Chewbacca es solo un basajaun más, change my mind. {evento}
+Santaclaus es la copia barata del olentzero.  
+Dato curioso: en realidad hitler ayudó a Franco durante la guerra para que este le diese una cabeza gigante de piedra de Zamora que gritaba si habia judios.  
+Goya se fue de parranda con sorgins.  
+Satanas? Eso es una mariconada, mejor Etsai.  
+¡Ostia tio tienes el dip! No, drip no... ¡Que tienes al dip delante, corre por tu vida!
+¿Cambio climatico? Eso debe ser culpa de los nuberus... ¡Malditos sean!
+Recuerda llevar un diente de ajo en el cuello, no vaya a ser que venga una meiga y tengamos sustos... Además si te entra hambre...
+¿Santaclaus? Que un señor con obesidad entre por mi chimenea (inexistente) no me gusta, así que prefiero que un tronco me cague los regalos, lo llamamos Tió de Nadal.  
+Un comentario más con ese tonito y viene el Papu y te lleva...
+Mucho simp de los dragones japoneses esos que son to' guapos pero poco simp del culébre...
+Veo muchos argumentos en contra de Halloween en España pero pocos se dan cuenta que el Samhain lleva aquí desde antes que los romanos...  
+Ten cuidado con los trasgos, como te quiten algo que necesites a saber donde estará luego.
+Lo de los volcanes debe ser culpa de Guayota... Siempre queriendo el mal a los demás.
+Un perro muy lanudo puede ser un tibicena, debes tener cuidado con ellos.
+Siempre se dice mucho de Loki, pero Sugaar mola mucho más.
+Chewbacca es solo un basajaun más, change my mind.
+Socorrooo!!! Me quede sin bateria en el coche en Miguel Fleta!
+En taxi, por el camino mas largo al destino; que digo? Hago?
+Con mis colegas en el restaurante luna rosa, comiendo una pizza cojonuda
+100 dias bastaron xra ver las intenciones d la dcha catalana: recorte  sanidad pública. Dcha española=dcha catalana=deterioro d lo publico
+Valcarce presidente incompetente
+SMS al mundo exterior: estaré mañana a las 11h en el chat de AvE. Responderé a todo... lo respondible ;-)
+Acabo de unirme a LinkedIn y de crear mi perfil profesional. Únete a mi red. [Dale click aqui]({link}) #in
+calor mucho calor en Madrid. esperando a la cola, a estas horas! a comprar el pan! apurando sgundos xpra la rentree!
+Entro en el metro frío sin lluvia; salgo del metro lluvia sin frío. Bendita lluvia!
+El premio ha sido en el aeropuerto de Berlin me encontré con la actriz de la peli: million dólar baby...guapísima :)
+Curiosos compañeros de viaje en el avión: una pequeña delegación de norcoreanos que iban a Cuba... glups!
+Algún buen rest mejicano en Pozuelo/Majadahonda?
+Ha alguna función para followear a todos los que me siguen sin necesidad de tener que ir no a no?
+Según El Pais, Bob Esponja es el Lider de la TDT. No puedo estar mas de acuerdo, sino, que lo pregunten a nuestros hijos. A mi tb me gusta
+Bob Esponja es imbatible en casa, no puede ni con el Madrid, a demain!
+Ser malos! Buenas noches colegas
+Feliz 29 de febrero! Reivindicando el derecho de todos a tener cumpleaños...
+Llevo fatal el jetlag, ayer y anteayer no pegue ojo...espero tener suerte tonight; cruzo dedos y paso a off zzzz
+marcho a comer.
+Bon jour my friends!
+Buenos dias, i love coffee
+Cosas de la vida, un día raro de animo me acaba saliendo redondo. Me voy a casa ya para que no se estropee...
+Buenos dias in the morning
+Good night amigos
+A casita que hace mucho frío
+Hello vecinos, que buena pinta tiene este domingo!
+hasta arriba de curro
+Ser felices
+Hasta mañana my friends
+Si a todo, excepto por lo de ser musulmanes
+¡{insertarnombre} ministro de igualdad!
+Me ofende que te hayas ofendido
+Dato curioso: El subreddit tiene servidor de discord. ¿No lo sabías? [¡Entra!]({link})
+Tú eres de esos que lleva calcetines y sandalias, lo sabe todo el sub, confiésalo ya...
+Dato curioso: No hay dato curioso, quitate la ropa.
+¿Sabes? yo se {br} YO SE QUIÉN ES M.RAJOY
+[Foto_graciosa_1.jpg](http://www.crear-meme.com/public/img/memes_users/there-s-no-meme-take-off-your-clothes.jpg)
+[Foto_graciosa_2.jpg](https://i.redd.it/zt6n8zf4gwy71.jpg)
+[Foto_graciosa_3.jpg](https://i.redd.it/0x5ufnzl8hx61.jpg)
+[Foto_graciosa_4.png](https://i.redd.it/uy3glk53bpr61.png)
+[Foto_graciosa_5.jpg](https://i.redd.it/4dfjj68hdv171.jpg)
+[Foto_graciosa_6.jpg](https://i.redd.it/ivr20j6xst061.jpg)
+[Foto_graciosa_7.jpg](https://i.redd.it/3r8vyxn11mo61.jpg)
+[Foto_graciosa_8.jpg]({link})
+[Foto_graciosa_9.png](https://i.redd.it/osebva6u8hh61.png)
+[Foto_graciosa_10.png](https://i.redd.it/pkwpoej4kj461.png)
+Para pensar...
+No puede hacer tanto caloooooooooooooooooooooooooor.
+¡Atención ciudadano! 他妈的谁翻译的! {br} Esto es un mensaje del Gobierno Central Chino. 鸡汤 CCP. Ese comentario que ha hecho está prohibido por la ley organica 24-1995. 我把它放在你的屁股里. Su internet será cortado hasta nuevo aviso para satisfacer las necesidades del gobierno. 政府，决定我的公鸡的人. Ha cometido un crimen serio. 鱼汤. No vuelva a hacer eso o le bajaremos creditos sociales (-7231!!1!). 我厌倦了翻译. {br} ¡Gloria al Gobierno Chino! 是骗人的!
+¿Continuamos la canción? Por eso esperaba...
+¿Algo más que decir?
+Caballero, usted debería moderar su vocabulario o le modero la cara a besos.
+Lo siento :(
+He de ir a cuidar a mi hija pequeña, que está con un resfriado que buah, le pica mucho la nariz. Todo es culpa de que teníamos calor y pues mi mujer abrió la ventana, entonces el gato se escapó. Pasamos toda la noche buscando al pobre Misifú, no encontrándolo. Cuando llegamos a casa, agotados, le dije a mi mujer que teníamos que remplazar al gato por algo, yo pensaba en un perrete al estilo Lucas, ¿sabes el de Albert Ribera?, pues ese, pero ella quiso tener una hija. Ay el bueno de Albert Ribera... Ese sí que era de centro y con sentido de estado... ¿Te puedes creer que lo conoció mi mujer antes de tener a nuestra hija? Me flipa mucho. Antes era más de UPyD, pero con la llegada de Albert me convertí en ciudadaner. Encima, no sé por qué Albert paga a mi mujer cada mes 500 €, pero bueno, a caballo regalado no le mires el diente como quien dice, ¿no? Pero bueno adiós, que la pobrecita si no se toma su medicamento vía nasal lo pasa mal.
+Poco me parece.
+KorejidmE éstà, nacís GrAmÂtik'älè
