@@ -31,7 +31,6 @@ Isla Bouvet
 Bulgaria
 Botswana
 Brunei
-Bielorrusia
 Belice
 Canadá
 República Centroafricana
@@ -176,7 +175,6 @@ Paraguay
 Qatar
 Reunión
 Rumania
-La Federación de Rusia
 Ruanda
 Arabia Saudita
 Las Islas Salomón
@@ -213,7 +211,6 @@ Trinidad y Tobago
 Tuvalu
 Taiwan
 Tanzania
-Ucrania
 Uganda
 Reino Unido
 Islas menores de EE.UU.

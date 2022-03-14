@@ -1,11 +1,13 @@
 from basadobot.models import User, ParienteBasado, Pildora, OtherComment, session
 from basadobot.security import security1, security2
 from basadobot.data import reciber
-from basadobot.cunado import generador_frase, messageCunado, preguntaCunada, respuestaFeliz, respuesta_basadobot_a_basadobot
+from basadobot.cunado import generador_frase, messageCunado, preguntaCunada, respuestaFeliz, respuesta_basadobot_a_basadobot, respuestaBotCaliente
 from basadobot.utils import printx
 from datetime import datetime as dt 
 import praw
 from time import sleep
+
+mensajeduda = r"¿Alguna duda? ¡Haz /info, pregunta en [r/BasadoBot](https://www.reddit.com/r/BasadoBot/) o en el [servidor de Discord de BasadoBot](https://discord.gg/esPZw9uxau)!"
 
 commitMessages = {
     "basado":"Commited, basado added!",
@@ -18,7 +20,7 @@ commitMessages = {
 
 variantesDePilldora = ["pileado", "pilleado", "pildoreado", "pastillado",
                     "pileada", "pilleada", "pildoreada", "pastillada",
-                    "pilled", "enpastillat", "pilatuta"]
+                    "pilled", "enpastillat", "pilatuta", "pildorado"]
 
 #Mensajes copiados de u/basedcount_bot momentaneamente.
 messages = {
@@ -137,7 +139,7 @@ class bot:
 
         #Ultima parte del mensaje y lo envia al comentario
         if recib.recibidor.basados != 1 and message:
-            message += "\n\n---\n\n^(¿Alguna duda? ¡Haz /info o pregunta en [r/BasadoBot](https://www.reddit.com/r/BasadoBot/)!)"
+            message += f"\n\n---\n\n^({mensajeduda})"
             recib.comment.reply(message)
 
     #Comprueba si cumple los requisitos para tener mensaje
@@ -156,7 +158,7 @@ class bot:
         for comment in subreddit_inspection.comments(limit=100):
             palabraEncontrada = ""
             for palabra in ["basado", "basada", "based", "basat", "oinarritua", "baseado", "basadisimo", "basadisima"]:
-                if palabra in comment.body.lower()[:len(palabra)] and str(comment.author).lower() != "BasadoBot":
+                if palabra in comment.body.lower()[:len(palabra)] and str(comment.author).lower() != "basadobot":
                     palabraEncontrada = palabra
                     break
             
@@ -195,10 +197,10 @@ class bot:
         for comment in subreddit_inspection.comments(limit=200):
             if str(comment.author) == "BasadoBot" and comment.score >= 13 and not session.query(OtherComment).filter(OtherComment.commentId == comment.id).first():
                 session.add(OtherComment(commentId=comment.id))
-                comment.reply(respuesta_basadobot_a_basadobot() + "\n\n---\n\n^(¿Alguna duda? ¡Haz /info o pregunta en [r/BasadoBot](https://www.reddit.com/r/BasadoBot/)!)")
+                comment.reply(respuesta_basadobot_a_basadobot() + f"\n\n---\n\n^({mensajeduda})")
                 return True
 
-            if "lounge" not in comment.submission.title.lower() and abs(comment.score) >= 13 and not session.query(OtherComment).filter(OtherComment.commentId == comment.id).first():
+            if "premios españísima" not in comment.submission.title.lower() and abs(comment.score) >= 13 and not session.query(OtherComment).filter(OtherComment.commentId == comment.id).first():
                 usuario = session.query(User).filter(User.username == str(comment.author)).first() 
                 if not usuario:
                     usuario = User(username=str(comment.author), basados=0, frasesCunado=True)
@@ -208,7 +210,7 @@ class bot:
                     continue
 
                 session.add(OtherComment(commentId=comment.id))
-                comment.reply(generador_frase(str(comment.author)) + "\n\n---\n\n^(¿Alguna duda? ¡Haz /info o pregunta en [r/BasadoBot](https://www.reddit.com/r/BasadoBot/)!)")
+                comment.reply(generador_frase(str(comment.author)) + f"\n\n---\n\n^({mensajeduda})")
                 return True
         
         return False
@@ -221,7 +223,7 @@ class bot:
             else:
                 message = messageCunado()
             
-            message += "\n\n---\n\n^(¿Alguna duda? ¡Haz /info o pregunta en [r/BasadoBot](https://www.reddit.com/r/BasadoBot/)!)"
+            message += f"\n\n---\n\n^({mensajeduda})"
             session.add(OtherComment(commentId = comment.id))
             comment.reply(message)
             self.commit_changes("mencion")
@@ -232,7 +234,11 @@ class bot:
                 message = "¿Algún problema? ¡Puedes dar feedback en r/BasadoBot!"
 
             elif "good bot" in comment.body.lower() or "buen bot" in comment.body.lower():        
-                message = respuestaFeliz()
+                if str(comment.author).lower() == "bot_goodbot_bot":
+                    message = respuestaBotCaliente()
+
+                else:
+                    message = respuestaFeliz()
 
             elif "u/basadobot" in comment.body.lower():
                 return self.mencion(comment)
@@ -240,7 +246,7 @@ class bot:
             else:
                 return
 
-            message += "\n\n---\n\n^(¿Alguna duda? ¡Haz /info o pregunta en [r/BasadoBot](https://www.reddit.com/r/BasadoBot/)!)"
+            message += f"\n\n---\n\n^({mensajeduda})"
             session.add(OtherComment(commentId = comment.id))
             comment.reply(message)
             self.commit_changes("bot")
@@ -278,7 +284,7 @@ class bot:
                 for numb, i in enumerate(usuarios):
                     message += f"|{numb+1}|[u/{i.username}](https://reddit.com/user/{i.username})|{i.basados}\n"
                 
-                message += "\n\n---\n\n^(¿Alguna duda? ¡Haz /info o pregunta en [r/BasadoBot](https://www.reddit.com/r/BasadoBot/)!)"
+                message += f"\n\n---\n\n^({mensajeduda})"
 
             elif "cantidaddebasado" == comando.body[1+ind:17+ind].lower():
                 toReturn = True
@@ -294,7 +300,7 @@ class bot:
                 else:
                     message = f"El usuario {toBuscar} no existe o no ha recibido ni hecho ningún basado."
 
-                message += "\n\n---\n\n^(¿Alguna duda? ¡Haz /info o pregunta en [r/BasadoBot](https://www.reddit.com/r/BasadoBot/)!)"
+                message += f"\n\n---\n\n^({mensajeduda})"
 
             elif "tirarpildora" == comando.body[1+ind:13+ind].lower():
                 toReturn = True
@@ -320,7 +326,7 @@ class bot:
                 else:
                     message = f"¡No tienes la píldora {toBuscar}!"
 
-                message += "\n\n---\n\n^(¿Alguna duda? ¡Haz /info o pregunta en [r/BasadoBot](https://www.reddit.com/r/BasadoBot/)!)"
+                message += f"\n\n---\n\n^({mensajeduda})"
 
             elif "frasecunado" == comando.body[1+ind:12+ind].lower() or "frasecuñado" == comando.body[1+ind:12+ind].lower():
                 toReturn = True
@@ -351,7 +357,7 @@ class bot:
                     else:
                         message += "\n\nActualmente no se envían frases cuñadas a tus comentarios."
 
-                message += "\n\n---\n\n^(¿Alguna duda? ¡Haz /info o pregunta en [r/BasadoBot](https://www.reddit.com/r/BasadoBot/)!)"
+                message += f"\n\n---\n\n^({mensajeduda})"
 
             else:
                 continue
