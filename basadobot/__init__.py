@@ -14,7 +14,8 @@ commitMessages = {
     "othercommands":"Commited, othercommands!",
     "cunado":"Commited, frase cunado!",
     "bot":"Commited, good or bad bot!",
-    "mencion": "Commited, have been mentioned"
+    "mencion": "Commited, have been mentioned!",
+    "pesetas": "Commited, converted to pesetas!"
 }
 
 
@@ -270,6 +271,7 @@ class bot:
                     "- /tirarpildora \{píldora\}: tira la píldora que mencione el usuario que pone el comando",
                     "- /frasecuñado \{valor\}: hace que BasadoBot comente o no en tus comentarios, según el valor (verdadero o falso)",
                     "A veces suelto alguna que otra frase un tanto de cuñado.",
+                    "Si dices algo en euros, moneda inútil, lo diré en las clásicas pesetas.",
                     "Soy de código abierto, es decir, ¡puedes ver mi código e incluso aportar!",
                     "[Haz click aquí para ver el código.](https://github.com/TheRepSter/BasadoBot-Reddit)",
                     "---",
@@ -365,6 +367,56 @@ class bot:
             comando.reply(message)
         
         return toReturn
+    
+    #Idea del bot u/kaenguru-knecht, que u/LuismiGER ha pensado que puede encajar en el bot.
+    def convertirEurosAPesetas(self):
+        subreddit_inspection = self.reddit.subreddit("BasadoBot+Asi_va_Espana")
+        commit = False
+        for comment in subreddit_inspection.comments(limit=100):
+            try:
+                if session.query(OtherComment).filter(OtherComment.commentId == comment.id).first():
+                    break
+
+                palabraEncontrada = ""
+                for palabra in ["€", "euro"]:
+                    if palabra in comment.body.lower() and str(comment.author).lower() != "basadobot":
+                        palabraEncontrada = palabra
+                        break
+                else:
+                    continue
+
+                if "peseta" not in comment.body.lower():
+                    continue
+
+                euros = float("".join(comment.body.lower().split(palabraEncontrada)[0].strip().split(" ")[-1].split(".")).replace(",", ".").split("-")[-1])
+                commit = True
+                
+                cents = ""
+                pesetas = euros * 166.3860
+                perraGorda = pesetas * 10
+                euros = f"{int(euros):,}" if int(euros) == float(euros) else f"{round(euros, 2):,.2f}"
+                pesetas = f"{int(pesetas):,}" if int(pesetas) == float(pesetas) else f"{round(pesetas, 2):,.2f}"
+                euros = euros.replace(",", "@").replace(".", ",").replace("@", ".")
+                pesetas = pesetas.replace(",", "@").replace(".", ",").replace("@", ".")
+                perraGordaTrunc = int(perraGorda) 
+                residuo = round((perraGorda - perraGordaTrunc) * 10)
+                perraGordaTrunc = f"{perraGordaTrunc:,}".replace(",", ".")
+                if residuo >= 5:
+                    cents += " con 1 perra chica"
+                    residuo -= 5
+                if residuo == 1:
+                    cents += f" y {residuo} centimo"
+                    residuo -= 1
+                if residuo != 0:
+                    cents += f" y {residuo} centimos"
+                
+                comment.reply(f"¿{euros}€? En mi epoca eso eran {pesetas} pesetas. Es decir, {perraGordaTrunc} perras gordas{cents}." + f"\n\n---\n\n^({mensajeduda})")
+                session.add(OtherComment(commentId=comment.id))
+            except ValueError:
+                pass
+        
+        if commit:
+            self.commit_changes("pesetas")
 
     #Funcion principal del bot
     def run(self):
@@ -401,6 +453,8 @@ class bot:
             comms = self.responder_otros_comandos(otros_comandos)
             if comms:
                 self.commit_changes("othercommands")
+
+            self.convertirEurosAPesetas()
 
             if dt.now().strftime('%M') in ["00", "15", "30", "45"]:
                 if self.frase_de_cunado():

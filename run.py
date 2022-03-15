@@ -7,7 +7,7 @@ if __name__ == '__main__':
     BasadoBot = bot(
         client_id = "1J2OALZQOi91tg",
         client_secret = client_secret,
-        user_agent = "<BasadoBot:v2.2.1>",
+        user_agent = "<BasadoBot:v2.3.0>",
         username = "BasadoBot",
         password = password
     )
