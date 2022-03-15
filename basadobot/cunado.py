@@ -2,10 +2,10 @@ from random import choice
 
 ultimos100 = []
 def mirarSiEstaEnLos100(frase):
-    global ultimos20
+    global ultimos100
     if frase in ultimos100:
         return True
-    ultimos20 = [frase] + ultimos100 if len(ultimos100) <= 100 else [frase] + ultimos100[:-1]
+    ultimos100 = [frase] + ultimos100 if len(ultimos100) <= 100 else [frase] + ultimos100[:-1]
     return False
 
 fraseEvento = "\n\n¡Feliz Noche de las ánimas 2021! No te olvides de participar en [este](https://www.reddit.com/r/Asi_va_Espana/comments/q3bb58/extra_extra_spookctober_versi%C3%B3n_espa%C3%B1ita/) evento que está ocurriendo en el subreddit hasta el 31 de octubre a las 23:59"

@@ -185,7 +185,7 @@ class bot:
         #Mira los ultimos 100 comentarios y en caso que inicie con "/" y no esté en la
         #database se añadirá a posibles respuestas.
         for comment in subreddit_inspection.comments(limit=100):
-            if comment.author != "BasadoBot" and "/" in comment.body and not session.query(OtherComment).filter(OtherComment.commentId == comment.id).first():
+            if str(comment.author) != "BasadoBot" and "/" in comment.body and not session.query(OtherComment).filter(OtherComment.commentId == comment.id).first():
                 session.add(OtherComment(commentId=comment.id))
                 comentarios.append(comment)
         
